@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Provider} from 'react-redux'
-import Layout from './containers/Layout'
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme'
 import store from './store'
+import {Route, BrowserRouter} from 'react-router'
 import './app.css';
 
 const theme = createMuiTheme({
@@ -26,9 +26,6 @@ const theme = createMuiTheme({
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      file: ''
-    }
   }
 
   componentDidMount() {
@@ -36,11 +33,13 @@ export default class App extends Component {
 
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
-        <Provider store={store}>
-          <Layout/>
-        </Provider>
-      </MuiThemeProvider>
+      <BrowserRouter>
+        <MuiThemeProvider theme={theme}>
+          <Provider store={store}>
+            <Route path='/' exact component={}/>
+          </Provider>
+        </MuiThemeProvider>
+      </BrowserRouter>
     );
   }
 }
