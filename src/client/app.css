@@ -2,6 +2,8 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -44,5 +46,68 @@ q:before, q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0; }
+
+html a {
+  font-family: 'Roboto', sans-serif; }
+
+@media only screen and (max-width: 480px) {
+  html {
+    font-size: 80%; } }
+@media only screen and (min-width: 480px) {
+  html {
+    font-size: 90%; } }
+@media only screen and (min-width: 600px) {
+  html {
+    font-size: 100%; } }
+@media only screen and (min-width: 840px) {
+  html {
+    font-size: 110%; } }
+@media only screen and (min-width: 960px) {
+  html {
+    font-size: 120%; } }
+@media only screen and (min-width: 1280px) {
+  html {
+    font-size: 130%; } }
+@keyframes fadein {
+  from {
+    opacity: .01; }
+  to {
+    opacity: 1; } }
+@keyframes fadeout {
+  from {
+    opacity: 1; }
+  99% {
+    opacity: .01; }
+  to {
+    display: none !important; } }
+.fade-out {
+  animation: fadeout 300ms !important; }
+
+body {
+  padding: 0;
+  margin: 0 !important; }
+
+#sign-in-wrapper {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: 50% 50%;
+  -webkit-animation: fadein 300ms;
+  -moz-animation: fadein 300ms;
+  -o-animation: fadein 300ms;
+  animation: fadein 300ms; }
+
+#sign-in-title {
+  grid-row: 1;
+  grid-column: span 2; }
+
+#chop-sticks {
+  background: url("./images/chopSticks.png") center no-repeat; }
+
+#sign-in-form-container {
+  grid-row: 2;
+  grid-column: span 2; }
+  @media only screen and (min-width: 840px) {
+    #sign-in-form-container {
+      grid-column: 2; } }
 
 /*# sourceMappingURL=app.css.map */

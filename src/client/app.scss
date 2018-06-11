@@ -1,15 +1,6 @@
-//@import 'reset.css';
-//@import 'bsCss/bootstrap.min';
-//// @import 'bsCss/bootstrap-theme.min';
 @import './styles/reset';
-////@import './styles/spectre/spectre';
-////@import './styles/spectre/icons/icons-core';
-////@import './styles/spectre/icons/icons-navigation';
-////@import './styles/spectre/icons/icons-object';
-////@import './styles/spectre/icons/icons-action';
-//@import './styles/responsive';
-//@import './styles/theme';
-//@import './styles/layout';
-//@import 'styles/components/index';
-//@import 'styles/animations';
-//
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import './styles/responsive_fonts';
+@import './styles/animations';
+@import "./styles/layout";

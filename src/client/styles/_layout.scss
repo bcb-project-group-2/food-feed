@@ -1,0 +1,54 @@
+body {
+  padding: 0;
+  margin: 0 !important;
+}
+
+//sign in page styles
+
+#sign-in-wrapper {
+
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: 50% 50%;
+
+  //transition: opacity 300ms;
+
+  -webkit-animation: fadein 300ms;
+  -moz-animation: fadein 300ms;
+  -o-animation: fadein 300ms;
+  animation: fadein 300ms;
+}
+
+#sign-in-title {
+  grid-row: 1;
+  grid-column: span 2
+}
+
+#chop-sticks {
+  background: url('./images/chopSticks.png') center no-repeat ;
+  //background-size:;
+}
+
+#sign-in-form-container {
+  grid-row: 2;
+  grid-column: span 2;
+
+  @media only screen and (min-width: 840px) {
+    grid-column: 2;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+}
+
+@media only screen and (min-width: 480px) {
+}
+
+@media only screen and (min-width: 600px) {
+}
+
+@media only screen and (min-width: 960px) {
+}
+
+@media only screen and (min-width: 1280px) {
+}
