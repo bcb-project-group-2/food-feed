@@ -21,18 +21,14 @@ const Loading = () => (
 
 import Verify from './containers/Verify';
 import CircularProgress from '@material-ui/core/CircularProgress'
-import './app.css';
+import('./app.css');
 
 const SignInPageContainer = createLazyContainer(
   () => import('./containers/SignInPageContainer'), Loading);
+const UserDashboardContainer = createLazyContainer(
+  () => import('./containers/UserDashboardContainer'), Loading);
+// import UserDashboardContainer from "./containers/UserDashboardContainer";
 
-
-// function lazyLoad(component) {
-//   return asyncComponent(
-//     () =>  import(component).then(module => module.default),
-//     component
-//   )
-// }
 
 const theme = createMuiTheme({
   palette: {
@@ -67,6 +63,7 @@ export default class App extends Component {
             <HashRouter>
               <Switch>
                 <Route path='/signin' component={SignInPageContainer}/>
+                <Route path='/dashboard' component={UserDashboardContainer}/>
                 <Route path='/' exact component={Verify}/>
               </Switch>
             </HashRouter>

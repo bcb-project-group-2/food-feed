@@ -38,9 +38,10 @@ class SignInPageContainer extends Component {
   }
 
   authenticateTransition() {
-    let node = this.pageNode.current;
-    node.classList.add('fade-out');
+    // let node = this.pageNode.current;
+    this.pageNode.current.classList.add('fade-out');
     setTimeout(() => {
+      this.pageNode.current.style.display = 'none !important';
       this.setState({
         authenticated: true
       })
@@ -56,7 +57,7 @@ class SignInPageContainer extends Component {
 
   render() {
     if (this.state.authenticated) {
-      return <Redirect to='/feed'/>
+      return <Redirect to='/dashboard'/>
     }
     return (
       <section id='sign-in-wrapper' ref={this.pageNode}>

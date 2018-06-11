@@ -77,7 +77,8 @@ html a {
   from {
     opacity: 1; }
   99% {
-    opacity: .01; }
+    opacity: .01;
+    display: none !important; }
   to {
     display: none !important; } }
 .fade-out {
