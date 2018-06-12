@@ -32,17 +32,17 @@ const UserDashboardContainer = createLazyContainer(
 
 const theme = createMuiTheme({
   palette: {
-    primary: {
-      light: '#CFD8DC',
-      main: '#607D8B',
-      dark: '#455A64',
+    secondary: {
+      light: '#df78ef',
+      main: '#ab47bc',
+      dark: '#790e8b',
       contrastText: '#FFFFFF',
     },
-    secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
+    primary: {
+      light: '#b084f4',
+      main: '#7e56c1',
+      dark: '#4d2b90',
+      contrastText: '#FFFFFF',
     },
   },
 });

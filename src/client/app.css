@@ -84,6 +84,9 @@ html a {
 .fade-out {
   animation: fadeout 300ms !important; }
 
+span {
+  padding-top: 2px; }
+
 body {
   padding: 48px 0;
   margin: 0 !important; }

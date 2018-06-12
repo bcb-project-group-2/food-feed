@@ -23,6 +23,9 @@ const styles = {
     width: 'fit-content',
     justifyContent: 'center',
   },
+  tab: {
+    padding: '.3rem 0',
+  },
   userIcon: {},
   title: {
     color: '#FFFFFF',
@@ -70,8 +73,8 @@ class NavContainer extends Component {
             #FoodFeed
           </Typography>
           <Tabs className={classes.tabs} value={index} onChange={this.handleChange}>
-            <Tab label='Feed'/>
-            <Tab label='activity'/>
+            <Tab className={classes.tab} label='Feed'/>
+            <Tab className={classes.tab} label='activity'/>
           </Tabs>
           <IconButton
             onClick = {() => this.props.dispatch({type: 'SWIPE', payload: 2})}
