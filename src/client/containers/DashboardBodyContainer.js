@@ -3,7 +3,14 @@ import {withStyles} from '@material-ui/core/styles'
 import {connect} from 'react-redux'
 import SwipeableViews from 'react-swipeable-views'
 import Typography from '@material-ui/core/Typography';
-import FeedContainer from './FeedContainer'
+// import FeedContainer from './FeedContainer'
+import createLazyContainer from 'react-lazy-import';
+import Loading from '../presentational/Loading'
+
+const FeedContainer = createLazyContainer(
+  () => import('./FeedContainer'), Loading);
+// const ActivityContainer = createLazyContainer(
+//   () => import(''), Loading);
 
 
 const styles = theme => ({
@@ -57,11 +64,12 @@ class DashboardBodyContainer extends Component {
       <div id='swipe-container'>
         <SwipeableViews
           index={this.state.index}
-          axis={this.state.index < 2 ? 'x-reverse' : 'y'}
+          axis={'x'}
           onChangeIndex={this.handleChangeIndex}
         >
           <FeedContainer/>
-          <div>goodbye</div>
+          <Loading/>
+          <Loading/>
         </SwipeableViews>
       </div>
     )

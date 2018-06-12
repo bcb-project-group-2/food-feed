@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import {withStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -63,8 +63,8 @@ class NavContainer extends Component {
 
   render() {
 
-    const { classes } = this.props;
-    const { index } = this.state;
+    const {classes} = this.props;
+    const {index} = this.state;
 
     return (
       <header id='nav-container-wrapper'>
@@ -77,7 +77,7 @@ class NavContainer extends Component {
             <Tab className={classes.tab} label='activity'/>
           </Tabs>
           <IconButton
-            onClick = {() => this.props.dispatch({type: 'SWIPE', payload: 2})}
+            onClick={() => this.props.dispatch({type: 'SWIPE', payload: 2})}
           >
             <Avatar>
               <VerifiedUser className={classes.userIcon}/>
