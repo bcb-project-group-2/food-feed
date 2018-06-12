@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import { connect } from 'react-redux'
+import {withStyles} from '@material-ui/core/styles'
+import {connect} from 'react-redux'
 import SwipeableViews from 'react-swipeable-views'
 import Typography from '@material-ui/core/Typography';
+import FeedContainer from './FeedContainer'
 
 
 const styles = theme => ({
@@ -51,16 +52,18 @@ class DashboardBodyContainer extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-    return(
-      <SwipeableViews
-        index={this.state.index}
-        axis={this.state.index < 2 ? 'x-reverse': 'y'}
-        onChangeIndex={this.handleChangeIndex}
-      >
-        <div style={{height: '100vh'}}>hello</div>
-        <div style={{height: '100vh'}}>goodbye</div>
-      </SwipeableViews>
+    const {classes} = this.props;
+    return (
+      <div id='swipe-container'>
+        <SwipeableViews
+          index={this.state.index}
+          axis={this.state.index < 2 ? 'x-reverse' : 'y'}
+          onChangeIndex={this.handleChangeIndex}
+        >
+          <FeedContainer/>
+          <div>goodbye</div>
+        </SwipeableViews>
+      </div>
     )
   }
 

@@ -10,7 +10,10 @@ class UserDashboardContainer extends Component {
 
   render() {
     return (
-      <main id='user-dashboard-container'>
+      <main
+        style={{animation: 'fadein 300ms'}}
+        id='user-dashboard-container'
+      >
         <NavContainer/>
         <DashboardBodyContainer/>
       </main>

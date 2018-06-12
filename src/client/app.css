@@ -76,11 +76,8 @@ html a {
 @keyframes fadeout {
   from {
     opacity: 1; }
-  99% {
-    opacity: .01;
-    display: none !important; }
   to {
-    display: none !important; } }
+    opacity: .01 !important; } }
 .fade-out {
   animation: fadeout 300ms !important; }
 
@@ -88,17 +85,28 @@ span {
   padding-top: 2px; }
 
 body {
-  padding: 48px 0;
-  margin: 0 !important; }
+  margin: 0 !important;
+  max-height: 100vh; }
 
 #sign-in-wrapper {
   display: grid;
   grid-template-rows: auto auto;
-  grid-template-columns: 50% 50%;
-  -webkit-animation: fadein 300ms;
-  -moz-animation: fadein 300ms;
-  -o-animation: fadein 300ms;
-  animation: fadein 300ms; }
+  grid-template-columns: 50% 50%; }
+
+#swipe-container {
+  max-height: 100vh;
+  overflow: hidden; }
+
+#feed-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 60px 2rem 0 2rem;
+  justify-content: space-around;
+  height: calc(100vh - 60px);
+  overflow: auto; }
+
+.feed-post > div {
+  text-wrap: normal; }
 
 #sign-in-title {
   grid-row: 1;

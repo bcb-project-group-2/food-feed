@@ -6,8 +6,7 @@
 @keyframes fadeout {
 
   from {opacity: 1}
-  99% {opacity: .01; display: none !important;}
-  to {display: none !important;}
+  to {opacity: .01 !important;}
 }
 
 .fade-out {
