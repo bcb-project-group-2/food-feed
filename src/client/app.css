@@ -85,7 +85,7 @@ html a {
   animation: fadeout 300ms !important; }
 
 body {
-  padding: 0;
+  padding: 48px 0;
   margin: 0 !important; }
 
 #sign-in-wrapper {

@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux'
 import {withStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import VerifiedUser from '@material-ui/icons/VerifiedUser'
+import VerifiedUser from '@material-ui/icons/PhotoCamera'
 import IconButton from '@material-ui/core/IconButton'
 import Avatar from '@material-ui/core/Avatar'
 
@@ -14,8 +15,9 @@ const styles = {
     display: 'flex',
     flexFlow: 'row nowrap',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  nav: {
+  tabs: {
     display: 'flex',
     flexFlow: 'row nowrap',
     width: 'fit-content',
@@ -28,23 +30,38 @@ const styles = {
   }
 };
 
-
+@connect(store => {
+  return store
+})
 class NavContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: 0
+      index: 0
     }
   }
 
-  handleChange = (event, value) => {
-    this.setState({location: value});
+  handleChange = (event, index) => {
+    if (this.state.index !== index) {
+      this.props.dispatch({type: 'SWIPE', payload: index});
+      // this.setState({index});
+    }
   };
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if (nextProps.view.index !== this.state.index) {
+      this.setState({
+        ...this.state,
+        ...nextProps.view
+      })
+    }
+  }
 
   render() {
 
-    const {classes} = this.props;
-    const {location} = this.state;
+    const { classes } = this.props;
+    const { index } = this.state;
 
     return (
       <header id='nav-container-wrapper'>
@@ -52,11 +69,13 @@ class NavContainer extends Component {
           <Typography className={classes.title} component='h3' color='#FFFFFF'>
             #FoodFeed
           </Typography>
-          <Tabs className={classes.nav} value={location} onChange={this.handleChange}>
+          <Tabs className={classes.tabs} value={index} onChange={this.handleChange}>
             <Tab label='Feed'/>
             <Tab label='activity'/>
           </Tabs>
-          <IconButton>
+          <IconButton
+            onClick = {() => this.props.dispatch({type: 'SWIPE', payload: 2})}
+          >
             <Avatar>
               <VerifiedUser className={classes.userIcon}/>
             </Avatar>
@@ -64,9 +83,7 @@ class NavContainer extends Component {
         </AppBar>
       </header>
     )
-
   }
-
 }
 
 export default withStyles(styles)(NavContainer);

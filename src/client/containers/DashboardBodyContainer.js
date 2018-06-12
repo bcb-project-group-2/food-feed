@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import SwipeableViews from 'react-swipeable-views'
 import { withStyles } from '@material-ui/core/styles'
+import { connect } from 'react-redux'
+import SwipeableViews from 'react-swipeable-views'
 import Typography from '@material-ui/core/Typography';
 
 
@@ -19,23 +20,46 @@ function TabContainer(props) {
   );
 }
 
+@connect(store => {
+  return store
+})
+
 class DashboardBodyContainer extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      index: 0,
+    }
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.view.index !== this.state.index) {
+      this.setState({
+        ...this.state,
+        ...nextProps.view
+      })
+    }
   }
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.view.index !== this.state.index;
+  }
+
+  handleChangeIndex = index => {
+    this.props.dispatch({type: 'SWIPE', payload: index})
+  };
+
   render() {
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
     return(
       <SwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-        index={this.state.value}
+        index={this.state.index}
+        axis={this.state.index < 2 ? 'x-reverse': 'y'}
         onChangeIndex={this.handleChangeIndex}
       >
-        {location === 0 && <TabContainer>Item One</TabContainer>}
-        {location === 1 && <TabContainer>Item Two</TabContainer>}
-        {location === 2 && <TabContainer>Item Three</TabContainer>}
-
+        <div style={{height: '100vh'}}>hello</div>
+        <div style={{height: '100vh'}}>goodbye</div>
       </SwipeableViews>
     )
   }
