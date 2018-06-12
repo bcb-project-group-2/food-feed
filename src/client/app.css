@@ -120,8 +120,8 @@ body {
 #feed-wrapper {
   display: flex;
   flex-flow: row wrap;
-  padding: 60px 2rem 0 2rem;
-  justify-content: space-around;
+  padding: 60px 1rem 0 1rem;
+  justify-content: space-evenly;
   height: calc(100vh - 60px);
   overflow: auto; }
 
@@ -141,5 +141,12 @@ body {
   @media only screen and (min-width: 840px) {
     #sign-in-form-container {
       grid-column: 2; } }
+
+.post-more {
+  color: whitesmoke;
+  padding: .3rem; }
+
+.post-more:hover {
+  cursor: pointer; }
 
 /*# sourceMappingURL=app.css.map */
