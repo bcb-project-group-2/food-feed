@@ -2,6 +2,8 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -44,5 +46,107 @@ q:before, q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0; }
+
+html a {
+  font-family: 'Roboto', sans-serif; }
+
+@media only screen and (max-width: 480px) {
+  html {
+    font-size: 80%; } }
+@media only screen and (min-width: 480px) {
+  html {
+    font-size: 90%; } }
+@media only screen and (min-width: 600px) {
+  html {
+    font-size: 100%; } }
+@media only screen and (min-width: 840px) {
+  html {
+    font-size: 110%; } }
+@media only screen and (min-width: 960px) {
+  html {
+    font-size: 120%; } }
+@media only screen and (min-width: 1280px) {
+  html {
+    font-size: 130%; } }
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+  padding-top: 60px; }
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: transparent; }
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 20px;
+  -webkit-transition: background-color 300ms;
+  -moz-transition: background-color 300ms;
+  -ms-transition: background-color 300ms;
+  -o-transition: background-color 300ms;
+  transition: background-color 300ms; }
+
+/* Handle on hover */
+@keyframes fadein {
+  from {
+    opacity: .01; }
+  to {
+    opacity: 1; } }
+@keyframes fadeout {
+  from {
+    opacity: 1; }
+  to {
+    opacity: .01 !important; } }
+.fade-out {
+  animation: fadeout 300ms !important; }
+
+span {
+  padding-top: 2px; }
+
+body {
+  margin: 0 !important;
+  max-height: 100vh; }
+
+#sign-in-wrapper {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: 50% 50%; }
+
+#swipe-container {
+  max-height: 100vh;
+  overflow: hidden; }
+
+#feed-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 60px 1rem 0 1rem;
+  justify-content: space-evenly;
+  height: calc(100vh - 60px);
+  overflow: auto; }
+
+.feed-post > div {
+  text-wrap: normal; }
+
+#sign-in-title {
+  grid-row: 1;
+  grid-column: span 2; }
+
+#chop-sticks {
+  background: url("./images/chopSticks.png") center no-repeat; }
+
+#sign-in-form-container {
+  grid-row: 2;
+  grid-column: span 2; }
+  @media only screen and (min-width: 840px) {
+    #sign-in-form-container {
+      grid-column: 2; } }
+
+.post-more {
+  color: whitesmoke;
+  padding: .3rem; }
+
+.post-more:hover {
+  cursor: pointer; }
 
 /*# sourceMappingURL=app.css.map */
