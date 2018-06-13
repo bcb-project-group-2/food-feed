@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import NavContainer from './NavContainer'
 import DashboardBodyContainer from './DashboardBodyContainer'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 
 const Loading = () => (

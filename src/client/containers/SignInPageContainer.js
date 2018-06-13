@@ -1,7 +1,8 @@
-import React, {Component} from 'react'
-import SignInForm from '../presentational/SignInForm'
-import Typography from '@material-ui/core/Typography'
-import Avatar from '@material-ui/core/Avatar'
+import React, {Component} from 'react';
+import SignInForm from '../presentational/SignInForm';
+import SignUpForm from '../presentational/SignUpForm';
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import {GoogleLogin} from 'react-google-login';
 import {Redirect} from 'react-router-dom'
@@ -30,6 +31,7 @@ class SignInPageContainer extends Component {
 
     this.handleInputs = this.handleInputs.bind(this);
     this.formSubmit = this.formSubmit.bind(this);
+    this.signSwitch = this.signSwitch.bind(this);
   }
 
   handleInputs(feild, val) {
@@ -50,14 +52,41 @@ class SignInPageContainer extends Component {
   componentWillUnmount() {
   }
 
-  shouldComponentUpdate(nextProps) {
-    return !this.state.authenticated
-  }
-
+  // shouldComponentUpdate(nextProps) {
+  //   // return !this.state.authenticated
+  // }
 
   formSubmit(event) {
     event.preventDefault();
     this.authenticateTransition();
+  }
+
+  loadForm() {
+    return this.state.mode === 'signin' ?
+      <SignInForm
+        login={GoogleLogin}
+        handleInputs={this.handleInputs}
+        handleForm={this.formSubmit}
+        switch={this.signSwitch}
+      />
+      :
+      <SignUpForm
+        login={GoogleLogin}
+        handleInputs={this.handleInputs}
+        handleForm={this.formSubmit}
+        switch={this.signSwitch}
+      />
+
+  }
+
+  signSwitch() {
+    console.log('switch');
+    if (this.state.mode === 'signin') {
+      this.setState({mode: 'signup'})
+    }
+    else {
+      this.setState({mode: 'signin'})
+    }
   }
 
 
@@ -96,11 +125,7 @@ class SignInPageContainer extends Component {
           </div>
           <div id='chop-sticks'/>
           <div id='sign-in-form-container' style={{padding: '2rem 0'}}>
-            <SignInForm
-              login={GoogleLogin}
-              handleInputs={this.handleInputs}
-              handleForm={this.formSubmit}
-            />
+            {this.loadForm()}
           </div>
         </section>
       )

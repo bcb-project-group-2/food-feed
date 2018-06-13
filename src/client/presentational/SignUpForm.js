@@ -70,6 +70,25 @@ class SignInForm extends Component {
             className={classes.textField}
             margin='normal'
           />
+          <TextField
+            required
+            placeholder='password123'
+            id='confirm-password'
+            label='Confirm Password'
+            type='password'
+            onChange={event => this.props.handleInputs('pass', event.target.value)}
+            className={classes.textField}
+            margin='normal'
+          />
+          <TextField
+            required
+            id='email'
+            label='Email Address'
+            placeholder='DavidBlanchard'
+            className={classes.textField}
+            margin='normal'
+            onChange={event => this.props.handleInputs('user', event.target.value)}
+          />
           <Button
             className={classes.textField}
             type='submit'
@@ -96,9 +115,15 @@ class SignInForm extends Component {
               onSuccess={auth => console.log(JSON.stringify(auth, null, 2))}
               clientId="624256432400-7jde5h7a5lbn9tnmdtm07qt05d7c39nu.apps.googleusercontent.com"
             >
-              GoogleLogin
+              Google Login
             </Button>
           </label>
+          <Button
+            variant='contained'
+            onClick={this.props.switch}
+            className={classes.textField}>
+            sign in
+          </Button>
           <this.props.login
             id="login"
             style={{display: 'none'}}
@@ -106,15 +131,12 @@ class SignInForm extends Component {
             clientId="624256432400-7jde5h7a5lbn9tnmdtm07qt05d7c39nu.apps.googleusercontent.com"
             onSuccess={auth => console.log('success', auth)}
             onFailure={() => console.log('fail')}
+
           />
-          <Button
-            variant='contained'
-            className={classes.textField}
-            onClick={this.props.switch}
-          >Sign up Now!</Button>
         </form>
       </Card>
     )
   }
 };
+
 export default withStyles(styles)(SignInForm)
