@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import FeedPost from '../presentational/FeedPost'
+import CollectionContainer from './CollectionContainer'
 class FeedContainer extends Component {
   constructor(props) {
     super(props);
@@ -8,30 +9,19 @@ class FeedContainer extends Component {
   render() {
     return(
       <section id='feed-wrapper'>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
-        <FeedPost/>
+        <CollectionContainer
+          Category='sushi'
+        />
+        <CollectionContainer
+          Category='sushi'
+        />
+        <CollectionContainer
+          Category='sushi'
+        />
+        <CollectionContainer
+          Category='sushi'
+        />
+        {/*<FeedPost/>*/}
       </section>
     )
   }

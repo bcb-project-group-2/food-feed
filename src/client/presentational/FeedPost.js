@@ -58,7 +58,7 @@ class FeedPost extends Component {
   render() {
     const {classes} = this.props;
     return (
-      <div className={classes.container}>
+      <div className={classes.container} style={{animation: 'fadein 200ms'}}>
         <Card className={classes.card}>
           <div>
             <MoreHoriz className={classes.moreIcon + ' ' + 'post-more'}/>

@@ -42,6 +42,11 @@ body {
   //background-size:;
 }
 
+.expandable-collection {
+  padding: 1rem 0;
+  //transition: height 400ms ease-out;
+}
+
 #sign-in-form-container {
   grid-row: 2;
   grid-column: span 2;

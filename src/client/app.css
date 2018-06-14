@@ -98,6 +98,11 @@ html a {
     opacity: 1; }
   to {
     opacity: .01 !important; } }
+@keyframes expand {
+  from {
+    height: 0; }
+  to {
+    height: 100%; } }
 .fade-out {
   animation: fadeout 300ms !important; }
 
@@ -134,6 +139,9 @@ body {
 
 #chop-sticks {
   background: url("./images/chopSticks.png") center no-repeat; }
+
+.expandable-collection {
+  padding: 1rem 0; }
 
 #sign-in-form-container {
   grid-row: 2;

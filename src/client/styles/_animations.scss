@@ -9,6 +9,11 @@
   to {opacity: .01 !important;}
 }
 
+@keyframes expand {
+  from {height: 0}
+  to {height: 100%}
+}
+
 .fade-out {
   animation: fadeout 300ms !important
 }
