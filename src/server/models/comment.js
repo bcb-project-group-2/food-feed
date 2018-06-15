@@ -1,18 +1,24 @@
+var Sequelize = require("sequelize");
+
 module.exports = function(sequelize, DataTypes) {
   var Comment = sequelize.define("Comment", {
-    post_id: {
+    body: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    createdAt: {
+      type: Sequelize.DATE,
+      allowNull: true,
     },
+    updatedAt: {
+      type: Sequelize.DATE,
+      allowNull: true,
+    }
+  },{
+    "timestamps": false
   });
 
   Comment.associate = function(models) {
-    // We're saying that a Comment should belong to an Author
-    // A Comment can't be created without an Author due to the foreign key constraint
     Comment.belongsTo(models.User, {
       foreignKey: {
         allowNull: false
