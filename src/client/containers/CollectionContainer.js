@@ -56,7 +56,7 @@ class CollectionContainer extends Component {
     super(props);
     this.state = {
       expanded: false
-    }
+    };
 
     this.expand = this.expand.bind(this);
   }
@@ -83,6 +83,7 @@ class CollectionContainer extends Component {
             image='https://www.healthyfood.co.nz/wp-content/uploads/2017/03/Sushi_in_10_steps-2000x1332.jpg'
             handleClick={this.mainPortraitClick}
             portrait={true}
+            center={true}
           />
           <div className={classes.divider}>
             <hr className={classes.horizontal}/>
@@ -98,24 +99,28 @@ class CollectionContainer extends Component {
             image='https://natashaskitchen.com/wp-content/uploads/2013/10/Sushi-Rice-and-California-Rolls-3-1-600x900.jpg'
             handleClick={this.mainPortraitClick}
             portrait={false}
+            center={true}
           />
           <CollectionPortrait
             // image={this.props.mainImage}
             image='http://iamafoodblog.com/wp-content/uploads/2017/10/untitled-1953.jpg'
             handleClick={this.mainPortraitClick}
             portrait={false}
+            center={true}
           />
           <CollectionPortrait
             // image={this.props.mainImage}
             image='http://www.latimes.com/resizer/NkvSEc6uY39eX4CLyszBZkOkdYU=/1400x0/arc-anglerfish-arc2-prod-tronc.s3.amazonaws.com/public/2PS3JQDYNNG27HIWBTQZNZC7UE.jpg'
             handleClick={this.mainPortraitClick}
             portrait={false}
+            center={true}
           />
           <CollectionPortrait
             // image={this.props.mainImage}
             image='https://hips.hearstapps.com/del.h-cdn.co/assets/18/04/1516666104-delish-greek-sushi-stills-2.jpg'
             handleClick={this.mainPortraitClick}
             portrait={false}
+            center={true}
           />
         </div>
         <div className={classes.expandButton}>

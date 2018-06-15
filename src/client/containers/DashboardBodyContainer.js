@@ -9,8 +9,8 @@ import Loading from '../presentational/Loading'
 
 const FeedContainer = createLazyContainer(
   () => import('./FeedContainer'), Loading);
-// const ActivityContainer = createLazyContainer(
-//   () => import(''), Loading);
+const ProfileContainer = createLazyContainer(
+  () => import('./ProfileContainer'), Loading);
 
 
 const styles = theme => ({
@@ -69,7 +69,7 @@ class DashboardBodyContainer extends Component {
         >
           <FeedContainer/>
           <Loading/>
-          <Loading/>
+          <ProfileContainer/>
         </SwipeableViews>
       </div>
     )

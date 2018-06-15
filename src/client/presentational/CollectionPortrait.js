@@ -7,10 +7,10 @@ import {withStyles} from '@material-ui/core/styles'
 
 const styles = {
   portrait: {
-    margin: 'auto',
     width: '18rem',
     height: '18rem',
-    borderRadius: '100%'
+    borderRadius: '100%',
+    margin: 'auto',
   },
   carousel: {
     width: '7rem',
@@ -30,11 +30,14 @@ const CollectionPortrait = props => {
   const {classes} = props;
 
   return (
-    <Card className={props.portrait ? classes.portrait : classes.carousel}>
+    <Card
+      className={props.portrait ? classes.portrait : classes.carousel}
+      style={props.center ? {} : {margin: 'initial'}}
+    >
       <CardMedia
         className={classes.image}
         image={props.image}
-        onClick={props.handleClick}
+        // onClick={props.handleClick}
       >
       </CardMedia>
     </Card>

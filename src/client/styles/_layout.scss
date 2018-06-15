@@ -19,13 +19,29 @@ body {
   overflow: hidden;
 }
 
+#feed-wrapper, #profile-wrapper {
+  margin: 50px 0;
+  height: calc(100vh - 50px);
+  overflow: auto;
+}
+
+#profile-wrapper {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+
+}
+
+#profile-portrait {
+  grid-column: span 2;
+}
+
 #feed-wrapper {
   display: flex;
   flex-flow: row wrap;
-  padding: 60px 1rem 0 1rem;
   justify-content: space-evenly;
-  height: calc(100vh - 60px);
-  overflow: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
 }
 
 .feed-post > div {
