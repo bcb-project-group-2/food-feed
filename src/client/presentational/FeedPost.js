@@ -38,7 +38,7 @@ class FeedPost extends Component {
     super(props);
     this.state = {
       fav: false
-    }
+    };
 
     this.favorite = this.favorite.bind(this)
   }
@@ -58,7 +58,7 @@ class FeedPost extends Component {
   render() {
     const {classes} = this.props;
     return (
-      <div className={classes.container}>
+      <div className={classes.container} style={{animation: 'fadein 200ms'}}>
         <Card className={classes.card}>
           <div>
             <MoreHoriz className={classes.moreIcon + ' ' + 'post-more'}/>
@@ -73,7 +73,15 @@ class FeedPost extends Component {
               Post
             </Typography>
             <Typography element='p'>
-              TEEEEEEE EEEE lEEEEEEEEEEE EEEEEEEE lEEEEEEEEE llEEx ltjha lsdlkfj lhjfhl lkjahsj lhdjfhfk
+              post post post
+              post post post
+              post post post
+              post post post
+              post post post
+              post post post
+              post post post
+              post post post
+              post post post
             </Typography>
             <div style={{display: 'flex', flexFlow: 'row-reverse nowrap'}}>
               <IconButton onClick={this.favorite} disableRipple={true}>

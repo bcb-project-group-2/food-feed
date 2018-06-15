@@ -71,7 +71,8 @@ html a {
 /* width */
 ::-webkit-scrollbar {
   width: 7px;
-  padding-top: 60px; }
+  padding-top: 60px;
+  z-index: 9999; }
 
 /* Track */
 ::-webkit-scrollbar-track {
@@ -98,6 +99,11 @@ html a {
     opacity: 1; }
   to {
     opacity: .01 !important; } }
+@keyframes expand {
+  from {
+    height: 0; }
+  to {
+    height: 100%; } }
 .fade-out {
   animation: fadeout 300ms !important; }
 
@@ -117,13 +123,48 @@ body {
   max-height: 100vh;
   overflow: hidden; }
 
+#feed-wrapper, #profile-wrapper {
+  margin: 48px 0;
+  height: calc(100vh - 48px);
+  overflow: auto; }
+
+@media only screen and (min-width: 600px) {
+  #profile-wrapper {
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%; } }
+
+#profile-portrait {
+  grid-column: 1;
+  border-right: 1px solid lightcoral; }
+
+#profile-body {
+  grid-column: 2 / span 2;
+  display: flex;
+  flex-flow: column nowrap;
+  height: fit-content !important; }
+
+#profile-posts-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  height: inherit;
+  overflow: hidden; }
+
+.profile-post-section {
+  height: calc(100vh - 98px);
+  overflow: auto; }
+
+.profile-post-section::-webkit-scrollbar {
+  width: 2px !important; }
+
+.profile-post-section::-webkit-scrollbar-track {
+  background-color: rgba(240, 128, 128, 0.64); }
+
 #feed-wrapper {
   display: flex;
   flex-flow: row wrap;
-  padding: 60px 1rem 0 1rem;
   justify-content: space-evenly;
-  height: calc(100vh - 60px);
-  overflow: auto; }
+  padding-left: 1rem;
+  padding-right: 1rem; }
 
 .feed-post > div {
   text-wrap: normal; }
@@ -134,6 +175,9 @@ body {
 
 #chop-sticks {
   background: url("./images/chopSticks.png") center no-repeat; }
+
+.expandable-collection {
+  padding: 1rem 0; }
 
 #sign-in-form-container {
   grid-row: 2;

@@ -73,7 +73,7 @@ class NavContainer extends Component {
             #FoodFeed
           </Typography>
           <Tabs className={classes.tabs} value={index} onChange={this.handleChange}>
-            <Tab className={classes.tab} label='Feed'/>
+            <Tab className={classes.tab} label='posts'/>
             <Tab className={classes.tab} label='activity'/>
           </Tabs>
           <IconButton
