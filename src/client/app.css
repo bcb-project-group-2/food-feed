@@ -124,16 +124,40 @@ body {
   overflow: hidden; }
 
 #feed-wrapper, #profile-wrapper {
-  margin: 50px 0;
-  height: calc(100vh - 50px);
+  margin: 48px 0;
+  height: calc(100vh - 48px);
   overflow: auto; }
 
-#profile-wrapper {
-  display: grid;
-  grid-template-columns: 25% 25% 25% 25%; }
+@media only screen and (min-width: 600px) {
+  #profile-wrapper {
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%; } }
 
 #profile-portrait {
-  grid-column: span 2; }
+  grid-column: 1;
+  border-right: 1px solid lightcoral; }
+
+#profile-body {
+  grid-column: 2 / span 2;
+  display: flex;
+  flex-flow: column nowrap;
+  height: fit-content !important; }
+
+#profile-posts-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  height: inherit;
+  overflow: hidden; }
+
+.profile-post-section {
+  height: calc(100vh - 98px);
+  overflow: auto; }
+
+.profile-post-section::-webkit-scrollbar {
+  width: 2px !important; }
+
+.profile-post-section::-webkit-scrollbar-track {
+  background-color: rgba(240, 128, 128, 0.64); }
 
 #feed-wrapper {
   display: flex;
