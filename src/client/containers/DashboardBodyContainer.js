@@ -3,7 +3,7 @@ import {withStyles} from '@material-ui/core/styles'
 import {connect} from 'react-redux'
 import SwipeableViews from 'react-swipeable-views'
 import Typography from '@material-ui/core/Typography';
-// import FeedContainer from './FeedContainer'
+import PostModal from './PostModal'
 import createLazyContainer from 'react-lazy-import';
 import Loading from '../presentational/Loading'
 
@@ -44,8 +44,7 @@ class DashboardBodyContainer extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.view.index !== this.state.index) {
       this.setState({
-        ...this.state,
-        ...nextProps.view
+        index: nextProps.view.index
       })
     }
   }
@@ -71,6 +70,7 @@ class DashboardBodyContainer extends Component {
           <Loading/>
           <ProfileContainer/>
         </SwipeableViews>
+        <PostModal/>
       </div>
     )
   }
