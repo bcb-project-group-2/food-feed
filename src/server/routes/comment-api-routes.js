@@ -10,10 +10,10 @@ module.exports = function(app){
 	app.delete("/api/comments/:id", function(req, res){
 		db.User.destroy({
 			where: { 
-				if: req.params.id
+				id: req.params.id
 			}
-		}).then(function(dbComment){
-			res.json(dbComment)
+		}).then({
+			res.end()
 		})
 	})
 }
