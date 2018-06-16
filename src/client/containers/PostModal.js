@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Modal from '@material-ui/core/Modal';
 import FeedPost from '../presentational/FeedPost'
 import {withStyles} from '@material-ui/core/styles';
@@ -24,7 +24,13 @@ class PostModal extends Component {
     this.state = {
       open: false,
       content: {}
-    }
+    };
+
+    this.closeModal = this.closeModal.bind(this)
+  }
+
+  closeModal() {
+    this.props.dispatch({type: 'TOGGLE_MODEL'})
   }
 
   componentWillReceiveProps(nextProps) {
@@ -43,9 +49,10 @@ class PostModal extends Component {
 
   render() {
     const {classes} = this.props;
-    return(
+    return (
       <Modal
         open={this.state.open}
+        onClose={this.closeModal}
       >
         <div
           className={classes.container}

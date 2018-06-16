@@ -41,6 +41,7 @@ class FeedPost extends Component {
     this.state = {
       fav: false
     };
+    this.reRender = false;
 
     this.favorite = this.favorite.bind(this);
     this.handleModalOpen = this.handleModalOpen.bind(this);
@@ -57,12 +58,17 @@ class FeedPost extends Component {
   }
 
   favorite() {
+    this.reRender = true;
     this.setState({
       fav: !this.state.fav
     })
   }
 
   shouldComponentUpdate(nextProps) {
+    if (this.reRender) {
+      this.reRender = false;
+      return true;
+    }
     return false;
   }
 
