@@ -4,6 +4,13 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    title: { 
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING,
+    },
     category: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -14,10 +21,12 @@ module.exports = function(sequelize, DataTypes) {
 
   Post.associate = function(models) {
     Post.hasMany(models.Comment, {
-      foreignKey:{
-        allowNull: false
-      }
+      onDelete: "cascade"
     });
+
+    Post.hasMany(models.Like, {
+      onDelete: "cascade"
+    })
 
     Post.belongsTo(models.User, {
       foreignKey: {

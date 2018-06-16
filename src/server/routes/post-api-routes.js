@@ -7,6 +7,17 @@ module.exports = function(app){
 		})
 	})
 
+	app.get("/api/discover/:mood/:offset", function(req,res){
+		db.Post.findAll({
+			offset: parseInt(req.params.offset) * 12;
+			where: {
+				category: req.params.mood
+			}
+		}).then(function(dbPost){
+			res.json(dbPost)
+		})
+	})
+
 	app.get("/api/feed/:id", function(req,res){
 		db.Relationship.findAll({
 			where: {
@@ -50,8 +61,8 @@ module.exports = function(app){
 			where: {
 				id: req.params.id
 			}
-		}).then(function(dbPost){
-			res.json(dbPost)
+		}).then({
+			res.end()
 		})
 	})
 }
