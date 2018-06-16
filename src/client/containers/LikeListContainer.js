@@ -1,6 +1,13 @@
 import React, {Component} from 'react'
 import List from '@material-ui/core/List'
 import LikeListItem from '../presentational/LikeListItem'
+import { withStyles } from '@material-ui/core/styles'
+
+const styles = {
+  container: {
+    width: 'fit-content',
+  }
+};
 
 class LikeListContainer extends Component {
   constructor(props) {
@@ -8,6 +15,7 @@ class LikeListContainer extends Component {
   }
 
   render() {
+    const {classes} = this.props;
     return(
       <List>
         <LikeListItem
@@ -48,4 +56,4 @@ class LikeListContainer extends Component {
 
 }
 
-export default LikeListContainer;
+export default withStyles(styles)(LikeListContainer);
