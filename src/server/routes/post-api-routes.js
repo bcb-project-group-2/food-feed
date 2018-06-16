@@ -61,6 +61,7 @@ module.exports = function(app){
 		})
 	})
 
+	//route to adjust like count of a post from user interaction on the front end
 	app.post("/api/post/like/:id/:val", function(req, res){
 		db.Post.updat({
 			likecount: likecount + req.params.val,
@@ -72,7 +73,7 @@ module.exports = function(app){
 		})
 	})
 
-	//delete a post
+	//delete a post from the database
 	app.delete("/api/post/:id", function(req, res){
 		db.Post.destroy({
 			where: {
