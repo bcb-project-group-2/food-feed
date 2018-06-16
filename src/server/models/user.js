@@ -21,9 +21,9 @@ module.exports = function(sequelize, DataTypes) {
       onDelete: "cascade"
     });
 
-    User.hasMany(models.Like), {
-      onDelete: "cascade"
-    }
+    // User.hasMany(models.Like, {
+    //   onDelete: "cascade"
+    // })
   }
 
   return User;

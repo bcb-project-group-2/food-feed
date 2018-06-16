@@ -11,6 +11,10 @@ module.exports = function(sequelize, DataTypes) {
     description: {
       type: DataTypes.STRING,
     },
+    likecount:{
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
     category: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -24,9 +28,9 @@ module.exports = function(sequelize, DataTypes) {
       onDelete: "cascade"
     });
 
-    Post.hasMany(models.Like, {
-      onDelete: "cascade"
-    })
+    // Post.hasMany(models.Like, {
+    //   onDelete: "cascade"
+    // })
 
     Post.belongsTo(models.User, {
       foreignKey: {

@@ -12,7 +12,7 @@ module.exports = function(app){
 			where: { 
 				id: req.params.id
 			}
-		}).then({
+		}).then(function(dbComment){
 			res.end()
 		})
 	})

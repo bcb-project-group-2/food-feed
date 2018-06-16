@@ -20,10 +20,38 @@ module.exports = function(app){
 	app.delete("/api/users/:id", function(req, res){
 		db.User.destroy({
 			where: { 
-				if: req.params.id
+				id: req.params.id
 			}
-		}).then({
+		}).then(function(dbUser) {
 			res.end()
+		})
+	})
+
+	app.get("/api/users/check/:email", function(req, res){
+		db.User.findOne({
+			where: {
+				user_email: req.params.email
+			}
+		}).then(function(dbUser){
+			if(dbUser === null){
+				res.json(false)
+			}else{
+				res.json(true)
+			}
+		})
+	})
+
+	app.get("/api/users/login/:email/:password", function(req, res){
+		db.User.findOne({
+			where: {
+				user_email: req.params.email
+			}
+		}).then(function(dbUser){
+			if(dbUser.password === req.params.password){
+				res.json(true)
+			}else{
+				res.json(false)
+			}
 		})
 	})
 }
