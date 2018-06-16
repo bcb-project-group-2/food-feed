@@ -61,8 +61,9 @@ module.exports = function(app){
 		})
 	})
 
+	//update the like count of a specific post 
 	app.post("/api/post/like/:id/:val", function(req, res){
-		db.Post.updat({
+		db.Post.update({
 			likecount: likecount + req.params.val,
 			where: {
 				id: req.params.id
