@@ -11,6 +11,8 @@ const FeedContainer = createLazyContainer(
   () => import('./FeedContainer'), Loading);
 const ProfileContainer = createLazyContainer(
   () => import('./ProfileContainer'), Loading);
+const ActivityContainer = createLazyContainer(
+  () => import('./ActivityContainer'), Loading);
 
 
 const styles = theme => ({
@@ -67,7 +69,7 @@ class DashboardBodyContainer extends Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <FeedContainer/>
-          <Loading/>
+          <ActivityContainer/>
           <ProfileContainer/>
         </SwipeableViews>
         <PostModal/>

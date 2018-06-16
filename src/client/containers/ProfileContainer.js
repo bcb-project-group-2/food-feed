@@ -43,7 +43,7 @@ class ProfileContainer extends Component {
     super(props);
     this.state = {
       index: 0
-    }
+    };
 
     this.handleSwipe = this.handleSwipe.bind(this)
   }

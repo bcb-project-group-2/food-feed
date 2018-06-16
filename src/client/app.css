@@ -123,7 +123,7 @@ body {
   max-height: 100vh;
   overflow: hidden; }
 
-#feed-wrapper, #profile-wrapper {
+#feed-wrapper, #profile-wrapper, #activity-wrapper {
   margin: 48px 0;
   height: calc(100vh - 48px);
   overflow: auto; }
