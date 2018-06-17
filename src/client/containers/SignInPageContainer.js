@@ -7,8 +7,13 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import {GoogleLogin} from 'react-google-login';
 import {Redirect} from 'react-router-dom'
 import chopsticks from '../images/chopSticks.png'
+import {authenticateUser, createUser} from "../actions/signIn";
+import {connect} from 'react-redux'
 
 
+@connect(store => {
+  return store
+})
 class SignInPageContainer extends Component {
   constructor(props) {
     super(props);
@@ -18,12 +23,14 @@ class SignInPageContainer extends Component {
     };
     this.inputs = {
       signin: {
-        user: '',
-        pass: ''
+        email: '',
+        pass: '',
       },
       signup: {
         user: '',
-        pass: ''
+        email: '',
+        pass: '',
+        passConf: '',
       },
     };
 
@@ -49,16 +56,25 @@ class SignInPageContainer extends Component {
     }, 300)
   }
 
-  componentWillUnmount() {
-  }
-
-  // shouldComponentUpdate(nextProps) {
-  //   // return !this.state.authenticated
-  // }
-
   formSubmit(event) {
     event.preventDefault();
-    this.authenticateTransition();
+    if (this.state.mode === 'signin') {
+      this.props.dispatch(
+        authenticateUser(
+          this.inputs.signin.email,
+          this.inputs.signin.pass
+        )
+      )
+    }
+    else {
+      this.props.dispatch(
+        createUser(
+          this.inputs.signup.email,
+          this.inputs.signup.user,
+          this.inputs.signup.pass
+        )
+      )
+    }
   }
 
   loadForm() {
@@ -89,6 +105,14 @@ class SignInPageContainer extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    try {
+      if (!!nextProps.user.currentUser.id) {
+        this.authenticateTransition()
+      }
+    }
+    catch(e) {}
+  }
 
   render() {
     if (this.state.authenticated) {

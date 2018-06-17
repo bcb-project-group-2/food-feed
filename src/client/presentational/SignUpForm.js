@@ -76,7 +76,7 @@ class SignInForm extends Component {
             id='confirm-password'
             label='Confirm Password'
             type='password'
-            onChange={event => this.props.handleInputs('pass', event.target.value)}
+            onChange={event => this.props.handleInputs('passConf', event.target.value)}
             className={classes.textField}
             margin='normal'
           />
@@ -87,7 +87,7 @@ class SignInForm extends Component {
             placeholder='DavidBlanchard'
             className={classes.textField}
             margin='normal'
-            onChange={event => this.props.handleInputs('user', event.target.value)}
+            onChange={event => this.props.handleInputs('email', event.target.value)}
           />
           <Button
             className={classes.textField}

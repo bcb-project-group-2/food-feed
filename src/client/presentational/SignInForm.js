@@ -52,12 +52,12 @@ class SignInForm extends Component {
         >
           <TextField
             required
-            id='username'
-            label='Username'
-            placeholder='DavidBlanchard'
+            id='email'
+            label='Email'
+            placeholder='DavidBlanchard@gobalto.com'
             className={classes.textField}
             margin='normal'
-            onChange={event => this.props.handleInputs('user', event.target.value)}
+            onChange={event => this.props.handleInputs('email', event.target.value)}
             maxLength='10'
           />
           <TextField

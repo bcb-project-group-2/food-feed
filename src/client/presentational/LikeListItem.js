@@ -32,7 +32,6 @@ const styles = {
 
 const LikeListItem = props => {
   const {classes} = props;
-  console.log(props);
 
   return (
     <ListItem className={classes.container}>
