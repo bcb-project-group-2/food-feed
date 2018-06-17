@@ -6,12 +6,29 @@ module.exports = function (app) {
     db.Post.create(req.body).then(function (newPost) {
       res.json(newPost)
     })
-  })
+  });
 
+  //get all distinct moods
   app.get('/api/discover/moods', (req, res) => {
     db.Post.findAll({
-      attributes: [db.sequelize.fn('DISTINCT', db.sequelize.col('category')), 'category'],
+      attributes: [
+        db.sequelize.fn('DISTINCT', db.sequelize.col('category')),
+        'category'
+      ],
     }).then(moods => res.json(moods))
+      .catch(err => res.json(err))
+  });
+
+  //get distinct moods where user participates
+  app.get('/api/discover/moods/:id', (req, res) => {
+    db.Post.findAll({
+      where: {UserId: req.params.id},
+      attributes: [
+        db.sequelize.fn('DISTINCT', db.sequelize.col('category')),
+        'category'
+      ],
+    }).then(moods => res.json(moods))
+      .catch(err => res.json(err))
   });
 
   //route for discover feed, returns a set of up to 12 posts fromt the given mood, offset by multiples of 12
@@ -34,7 +51,7 @@ module.exports = function (app) {
         UserId: req.params.id
       }
     }).then(async function (dbPost) {
-      var postArr = []
+      var postArr = [];
 
       let promiseArr = dbPost.map(({following_id}) =>
         db.Post.findAll({
