@@ -43,7 +43,7 @@ class ProfileContainer extends Component {
     super(props);
     this.state = {
       index: 0
-    }
+    };
 
     this.handleSwipe = this.handleSwipe.bind(this)
   }
@@ -103,7 +103,7 @@ class ProfileContainer extends Component {
           </AppBar>
           <SwipeableViews
             index={index}
-            axis={'x-reverse'}
+            axis={'x'}
             onChangeIndex={index => this.handleSwipe(null, index)}
             style={{overflow: 'hidden'}}
           >

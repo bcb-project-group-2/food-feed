@@ -3,7 +3,7 @@ import {withStyles} from '@material-ui/core/styles'
 import {connect} from 'react-redux'
 import SwipeableViews from 'react-swipeable-views'
 import Typography from '@material-ui/core/Typography';
-// import FeedContainer from './FeedContainer'
+import PostModal from './PostModal'
 import createLazyContainer from 'react-lazy-import';
 import Loading from '../presentational/Loading'
 
@@ -11,6 +11,8 @@ const FeedContainer = createLazyContainer(
   () => import('./FeedContainer'), Loading);
 const ProfileContainer = createLazyContainer(
   () => import('./ProfileContainer'), Loading);
+const ActivityContainer = createLazyContainer(
+  () => import('./ActivityContainer'), Loading);
 
 
 const styles = theme => ({
@@ -44,8 +46,7 @@ class DashboardBodyContainer extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.view.index !== this.state.index) {
       this.setState({
-        ...this.state,
-        ...nextProps.view
+        index: nextProps.view.index
       })
     }
   }
@@ -68,9 +69,10 @@ class DashboardBodyContainer extends Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <FeedContainer/>
-          <Loading/>
+          <ActivityContainer/>
           <ProfileContainer/>
         </SwipeableViews>
+        <PostModal/>
       </div>
     )
   }

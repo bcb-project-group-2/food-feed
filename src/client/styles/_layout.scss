@@ -19,7 +19,7 @@ body {
   overflow: hidden;
 }
 
-#feed-wrapper, #profile-wrapper {
+#feed-wrapper, #profile-wrapper, #activity-wrapper {
   margin: 48px 0;
   height: calc(100vh - 48px);
   overflow: auto;
@@ -118,4 +118,28 @@ body {
 }
 
 @media only screen and (min-width: 1280px) {
+}
+
+#activity-wrapper {
+  display: grid;
+  grid-template-columns: 33.33%  33.33%  33.33%;
+}
+
+#likes-container {
+  grid-column: 1;
+}
+
+#followers-container {
+  grid-column: 2
+}
+
+#following-container {
+  grid-column: 3
+}
+
+#followers-container, #likes-container, #following-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 .6rem
 }

@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux'
 import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
@@ -33,14 +34,21 @@ const styles = {
   }
 };
 
+@connect(store => store)
 class FeedPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
       fav: false
     };
+    this.reRender = false;
 
-    this.favorite = this.favorite.bind(this)
+    this.favorite = this.favorite.bind(this);
+    this.handleModalOpen = this.handleModalOpen.bind(this);
+  }
+
+  handleModalOpen(id) {
+    this.props.dispatch({type: 'TOGGLE_MODAL'})
   }
 
   buttonFill(classes) {
@@ -50,9 +58,18 @@ class FeedPost extends Component {
   }
 
   favorite() {
+    this.reRender = true;
     this.setState({
       fav: !this.state.fav
     })
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (this.reRender) {
+      this.reRender = false;
+      return true;
+    }
+    return false;
   }
 
   render() {
@@ -61,7 +78,10 @@ class FeedPost extends Component {
       <div className={classes.container} style={{animation: 'fadein 200ms'}}>
         <Card className={classes.card}>
           <div>
-            <MoreHoriz className={classes.moreIcon + ' ' + 'post-more'}/>
+            <MoreHoriz
+              className={classes.moreIcon + ' ' + 'post-more'}
+              onClick={this.handleModalOpen}
+            />
           </div>
           <CardMedia
             className={classes.media}
