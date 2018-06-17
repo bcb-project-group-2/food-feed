@@ -186,6 +186,25 @@ body {
     #sign-in-form-container {
       grid-column: 2; } }
 
+#activity-wrapper {
+  display: grid;
+  grid-template-columns: 33.33%  33.33%  33.33%; }
+
+#likes-container {
+  grid-column: 1; }
+
+#followers-container {
+  grid-column: 2; }
+
+#following-container {
+  grid-column: 3; }
+
+#followers-container, #likes-container, #following-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.6rem; }
+
 .post-more {
   color: whitesmoke;
   padding: .3rem; }
