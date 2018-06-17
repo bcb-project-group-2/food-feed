@@ -5,7 +5,7 @@ const parser = require('body-parser');
 const path = require('path');
 // var keys = require('dotenv').config()
 
-var PORT = 3000;
+var PORT = process.env.PORT || 8080;
 //require our models for syncing
 var db = require("./models");
 

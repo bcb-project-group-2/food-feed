@@ -8,12 +8,12 @@ module.exports = function(sequelize, DataTypes) {
   });
 
 
-  User.associate = function(models){
-  	User.hasMany(models.Relationship, {
-  		onDelete: "cascade"
-  	});
+  User.associate = function (models) {
+    User.hasMany(models.Relationship, {
+      onDelete: "cascade"
+    });
 
-    User.hasMany(models.Post,{
+    User.hasMany(models.Post, {
       onDelete: "cascade"
     });
 
@@ -24,7 +24,8 @@ module.exports = function(sequelize, DataTypes) {
     // User.hasMany(models.Like, {
     //   onDelete: "cascade"
     // })
-  }
+  };
+
 
   return User;
 };
