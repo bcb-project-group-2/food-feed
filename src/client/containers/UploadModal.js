@@ -11,10 +11,17 @@ import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 
 const styles = {
+  imageUrl: {
+    width: '100% !importaint',
+    height: 'fit-content',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    alignItems: 'center',
+  },
   container: {
     position: 'fixed',
     background: 'white',
-    width: 'fit-content',
+    width: '27rem',
     height: 'fit-content',
     top: '50%',
     left: '50%',
@@ -46,6 +53,34 @@ class UploadModal extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      imageUrl: null
+    };
+
+    this.inputs = {
+      title: '',
+      description: '',
+      mood: '',
+      img: '',
+    }
+
+    this.handleInputs = this.handleInputs.bind(this)
+  }
+
+  handleInputs(feild, val) {
+    this.inputs[feild] = val;
+    console.log(feild, val)
+  }
+
+  handleUpload() {
+    window.cloudinary.openUploadWidget(
+      {upload_preset: 'my_preset'},
+      (err, res) => {
+        if (err) throw err;
+        this.props.handleInputs('img', res[0].url);
+        this.setState({imageUrl: res[0].url})
+      },
+    );
   }
 
   shouldComponentUpdate(nextProps) {
@@ -84,6 +119,7 @@ class UploadModal extends Component {
               placeholder='Foooooooooood'
               className={classes.textField}
               margin='normal'
+              onChange={event => this.handleInputs('title', event.target.value)}
               maxLength='10'
             />
             <TextField
@@ -93,6 +129,7 @@ class UploadModal extends Component {
               placeholder='Dank Sushi'
               className={classes.textField}
               margin='normal'
+              onChange={event => this.handleInputs('mood', event.target.value)}
               maxLength='10'
             />
             <TextField
@@ -103,8 +140,31 @@ class UploadModal extends Component {
               placeholder='Dank Sushi'
               className={classes.textField}
               margin='normal'
+              onChange={event => this.handleInputs('description', event.target.value)}
               maxLength='10'
             />
+            <div className={classes.imageUrl}>
+              <TextField
+                value={this.state.imageUrl || null}
+                required
+                id='img'
+                label={this.state.imageUrl ? '' : 'image url'}
+                margin='normal'
+                onChange={event => this.handleInputs('img', event.target.value)}
+              />
+              <IconButton
+                onClick={this.handleUpload}
+              >
+                <FileUpload/>
+              </IconButton>
+            </div>
+            <Button
+              className={classes.textField}
+              variant={"contained"}
+              color={"primary"}
+            >
+              create post
+            </Button>
           </form>
         </Card>
       </Modal>
