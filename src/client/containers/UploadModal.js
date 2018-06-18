@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import axios from 'axios'
+import {getPostsByMood} from "../actions/posts";
 import Modal from '@material-ui/core/Modal';
 import Card from '@material-ui/core/Card'
 import Button from '@material-ui/core/Button'
@@ -62,9 +64,10 @@ class UploadModal extends Component {
       description: '',
       mood: '',
       img: '',
-    }
+    };
 
-    this.handleInputs = this.handleInputs.bind(this)
+    this.handleInputs = this.handleInputs.bind(this);
+    this.handleUpload = this.handleUpload.bind(this);
   }
 
   handleInputs(feild, val) {
@@ -77,14 +80,33 @@ class UploadModal extends Component {
       {upload_preset: 'my_preset'},
       (err, res) => {
         if (err) throw err;
-        this.props.handleInputs('img', res[0].url);
+        this.handleInputs('img', res[0].url);
         this.setState({imageUrl: res[0].url})
       },
     );
   }
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.view.modals.upload !== nextProps.view.modals.upload
+  createPost(inputs, id) {
+    axios.post('/api/post', {
+      url: inputs.img,
+      title: inputs.title,
+      category: inputs.mood,
+      description: inputs.description,
+      UserId: id,
+    }).then(() => {
+      this.props.dispatch(getPostsByMood(inputs.mood, 0));
+      this.props.dispatch({
+        type: 'TOGGLE_MODAL', payload: 'upload'
+      });
+    })
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return(
+    this.props.view.modals.upload !== nextProps.view.modals.upload ||
+      this.state.imageUrl !== nextState.imageUrl
+    )
+
   }
 
   render() {
@@ -111,6 +133,7 @@ class UploadModal extends Component {
               flexFlow: 'column nowrap',
               alignItems: 'center',
             }}
+            onSubmit={() => this.createPost(this.inputs, this.props.user.currentUser.id)}
           >
             <TextField
               required
@@ -159,6 +182,7 @@ class UploadModal extends Component {
               </IconButton>
             </div>
             <Button
+              type='submit'
               className={classes.textField}
               variant={"contained"}
               color={"primary"}

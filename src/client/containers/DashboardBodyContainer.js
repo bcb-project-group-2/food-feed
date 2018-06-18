@@ -52,6 +52,7 @@ class DashboardBodyContainer extends Component {
       }
       else {
         axios.get(`/api/users/${localStorage.id}`).then(res => {
+          console.log(res.data);
           this.props.dispatch({
             type: 'AUTHENTICATE_USER_SUCCESS',
             payload: res.data,
