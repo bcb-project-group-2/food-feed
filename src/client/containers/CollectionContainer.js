@@ -54,7 +54,6 @@ const styles = {
   postContainer: {
     display: 'flex',
     flexFlow: 'row wrap',
-    // justifyContent: ,
     padding: '1rem 0',
   },
 };
@@ -91,21 +90,10 @@ class CollectionContainer extends Component {
     }
   }
 
-  // getPortraitImage(index) {
-  //   try {
-  //     return this.props.post.moodPosts[this.props.category][index][url]
-  //   }
-  //   catch (e) {
-  //     return 'https://uploads-ssl.webflow.com/57e5747bd0ac813956df4e96/5aebae14c6d254621d81f826_placeholder.png'
-  //   }
-  // }
-
-  getImages() {
-    //do some redux stuff, get urls
-  }
-
   componentDidMount() {
-    this.props.dispatch(getPostsByMood(this.props.category, this.state.offset))
+    if (!this.props.post.moodPosts[this.props.category]){
+      this.props.dispatch(getPostsByMood(this.props.category, this.state.offset))
+    }
   }
 
   componentWillReceiveProps(nextProps) {

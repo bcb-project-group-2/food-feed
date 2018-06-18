@@ -10,7 +10,7 @@ module.exports = function (app) {
     }).then(function (dbUser) {
       res.json(dbUser)
     })
-  })
+  });
 
   //update the user table a new entry
   app.post("/api/users", function (req, res) {
@@ -19,6 +19,7 @@ module.exports = function (app) {
         id: dbUser.id,
         user_email: dbUser.user_email,
         user_name: dbUser.user_name,
+        profile_picture: dbUser.profile_picture,
       })
     });
   });

@@ -106,6 +106,7 @@ require("./routes/post-api-routes.js")(app);
 require("./routes/comment-api-routes.js")(app);
 require("./routes/relationship-api-routes.js")(app);
 require("./routes/user-api-routes.js")(app);
+require("./routes/image-upload-routes.js")(app);
 
 db.sequelize.sync({ force: true }).then(function() {
   app.listen(PORT, function() {

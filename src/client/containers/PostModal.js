@@ -5,7 +5,7 @@ import FeedPost from '../presentational/FeedPost'
 import {withStyles} from '@material-ui/core/styles';
 
 const styles = {
-  posts: {
+  container: {
     position: 'fixed',
     background: 'white',
     width: 'fit-content',

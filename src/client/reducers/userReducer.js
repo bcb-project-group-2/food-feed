@@ -38,7 +38,9 @@ export default function reducer(
           fetched: true,
           error: false,
         },
-        currentUser: action.payload
+        currentUser: {
+          ...action.payload,
+        }
       }
     }
     case "FETCH_FILE": {

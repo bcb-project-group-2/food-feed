@@ -4,8 +4,10 @@ import {connect} from 'react-redux'
 import SwipeableViews from 'react-swipeable-views'
 import Typography from '@material-ui/core/Typography';
 import PostModal from './PostModal'
+import UploadModal from  './UploadModal'
 import createLazyContainer from 'react-lazy-import';
 import Loading from '../presentational/Loading'
+import axios from 'axios'
 
 const FeedContainer = createLazyContainer(
   () => import('./FeedContainer'), Loading);
@@ -43,6 +45,22 @@ class DashboardBodyContainer extends Component {
     }
   };
 
+  componentDidMount() {
+    if (!this.props.user.currentUser) {
+      if (!localStorage.id) {
+        window.location = '/'
+      }
+      else {
+        axios.get(`/api/users/${localStorage.id}`).then(res => {
+          this.props.dispatch({
+            type: 'AUTHENTICATE_USER_SUCCESS',
+            payload: res.data,
+          })
+        })
+      }
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.view.index !== this.state.index) {
       this.setState({
@@ -51,8 +69,9 @@ class DashboardBodyContainer extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.view.index !== this.state.index;
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.view.index !== this.state.index ||
+      this.props.user.currentUser !== nextProps.user.currentUser;
   }
 
   handleChangeIndex = index => {
@@ -73,6 +92,7 @@ class DashboardBodyContainer extends Component {
           <ProfileContainer/>
         </SwipeableViews>
         <PostModal/>
+        <UploadModal/>
       </div>
     )
   }
