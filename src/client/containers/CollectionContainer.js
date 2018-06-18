@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux'
+import { getPostsByMood } from "../actions/posts";
 import CollectionPortrait from '../presentational/CollectionPortrait';
-import CollectionPosts from '../presentational/CollectionPosts';
+import FeedPost from '../presentational/FeedPost'
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 import classNames from 'classnames';
 
 
 const styles = {
-  container: {
+  posts: {
     padding: '1.5rem 0',
     width: '100%',
   },
@@ -48,14 +50,22 @@ const styles = {
     // animation: 'expand 300ms',
     height: '100%',
     overflow: 'hidden',
-  }
+  },
+  postContainer: {
+    display: 'flex',
+    flexFlow: 'row wrap',
+    justifyContent: 'space-evenly',
+    padding: '1rem 0',
+  },
 };
 
+@connect(store => store)
 class CollectionContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: false
+      expanded: false,
+      offset: 0,
     };
 
     this.expand = this.expand.bind(this);
@@ -69,14 +79,43 @@ class CollectionContainer extends Component {
     this.setState({expanded: !this.state.expanded})
   }
 
+  createPosts() {
+    if (this.props.post.moodPosts[this.props.category]) {
+      return this.props.post.moodPosts[this.props.category].map(post => (
+        <FeedPost
+          {...post}
+        />
+      ))
+    }
+  }
+
   getImages() {
     //do some redux stuff, get urls
+  }
+
+  componentDidMount() {
+    this.props.dispatch(getPostsByMood(this.props.category, this.state.offset))
+  }
+
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.post.moodPosts[this.props.category]
+  //     !== this.props.post.moodPosts[this.props.category]) {
+  //
+  //   }
+  // }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return(
+      nextProps.post.moodPosts[this.props.category] !==
+      this.props.post.moodPosts[this.props.category] ||
+        this.state !== nextState
+    )
   }
 
   render() {
     const {classes} = this.props;
     return (
-      <div className={classNames('collection-container', classes.container)}>
+      <div className={classNames('collection-container', classes.posts)}>
         <div className={'collection-main'}>
           <CollectionPortrait
             // image={this.props.mainImage}
@@ -88,7 +127,7 @@ class CollectionContainer extends Component {
           <div className={classes.divider}>
             <hr className={classes.horizontal}/>
             <Typography component='h2' className={classes.collectionTitle}>
-              Sushi
+              {this.props.category}
             </Typography>
             <hr className={classes.horizontal}/>
           </div>
@@ -135,7 +174,9 @@ class CollectionContainer extends Component {
         <div style={{height: 'auto'}}>
           <div
             className={classNames(this.state.expanded ? classes.expanded : classes.expandable, 'expandable-collection')}>
-            <CollectionPosts/>
+            <div className={classes.postContainer}>
+              {this.createPosts()}
+            </div>
           </div>
         </div>
       </div>

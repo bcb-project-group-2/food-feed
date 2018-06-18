@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography'
 import {withStyles} from '@material-ui/core/styles'
 
 const styles = {
-  container: {
+  posts: {
     display: 'flex',
     flexFlow: 'column nowrap',
     alignItems: 'center',
@@ -34,7 +34,7 @@ const LikeListItem = props => {
   const {classes} = props;
 
   return (
-    <ListItem className={classes.container}>
+    <ListItem className={classes.posts}>
       <div className={classes.listHeader}>
         <ListItemIcon>
           <Favorite/>

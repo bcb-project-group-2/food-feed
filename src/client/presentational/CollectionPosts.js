@@ -3,18 +3,18 @@ import FeedPost from './FeedPost';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
-  container: {
+  posts: {
     display: 'flex',
     flexFlow: 'row wrap',
     justifyContent: 'space-evenly',
     padding: '1rem 0',
-  }
+  },
 };
 
 const CollectionPosts = props => {
   const {classes} = props;
   return(
-    <div className={classes.container}>
+    <div className={classes.posts}>
       <FeedPost/>
       <FeedPost/>
       <FeedPost/>

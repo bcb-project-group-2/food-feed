@@ -9,7 +9,7 @@ import {Redirect} from 'react-router-dom'
 
 
 const styles = theme => ({
-  container: {
+  posts: {
     width: 'fit-content',
     height: 'fit-content',
     padding: '2rem',
@@ -39,7 +39,7 @@ class SignInForm extends Component {
   render() {
     const {classes} = this.props;
     return (
-      <Card className={classes.container}>
+      <Card className={classes.posts}>
         <Typography className={classes.header} component='h3'>Sign In</Typography>
         <form
           id='sign-in-form'
@@ -122,7 +122,7 @@ class SignInForm extends Component {
             variant='contained'
             onClick={this.props.switch}
             className={classes.textField}>
-            sign in
+            sign up
           </Button>
           <this.props.login
             id="login"

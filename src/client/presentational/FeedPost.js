@@ -9,7 +9,7 @@ import {Favorite, FavoriteBorder, MoreHoriz} from '@material-ui/icons'
 import {withStyles} from '@material-ui/core/styles'
 
 const styles = {
-  container: {
+  posts: {
     minWidth: '23%',
     padding: '.5rem',
   },
@@ -75,7 +75,7 @@ class FeedPost extends Component {
   render() {
     const {classes} = this.props;
     return (
-      <div className={classes.container} style={{animation: 'fadein 200ms'}}>
+      <div className={classes.posts} style={{animation: 'fadein 200ms'}}>
         <Card className={classes.card}>
           <div>
             <MoreHoriz
@@ -85,23 +85,21 @@ class FeedPost extends Component {
           </div>
           <CardMedia
             className={classes.media}
-            image="https://hightimes.com/wp-content/uploads/2017/04/Arizona-Police-Lizard.jpg"
+            image={this.props.url}
             title="Contemplative Reptile"
           />
           <CardContent style={{paddingBottom: 0}}>
-            <Typography element='h4'>
-              Post
+            <Typography
+              element='h4'
+              style={{
+                borderBottom: 'solid 1px gray',
+                paddingBottom: '.4rem',
+              }}
+            >
+              {this.props.title}
             </Typography>
             <Typography element='p'>
-              post post post
-              post post post
-              post post post
-              post post post
-              post post post
-              post post post
-              post post post
-              post post post
-              post post post
+              {this.props.description || 'Food feed for your friends and your food. Do not fret my child, the food has come to feed'}
             </Typography>
             <div style={{display: 'flex', flexFlow: 'row-reverse nowrap'}}>
               <IconButton onClick={this.favorite} disableRipple={true}>

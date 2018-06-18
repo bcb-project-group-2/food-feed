@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Avatar from '@material-ui/core/Avatar'
 
 const styles = {
-  container: {
+  posts: {
     padding: '0 .5rem 0 .5rem ',
     display: 'flex',
     flexFlow: 'row nowrap',
@@ -68,7 +68,7 @@ class NavContainer extends Component {
 
     return (
       <header id='nav-container-wrapper'>
-        <AppBar className={classes.container}>
+        <AppBar className={classes.posts}>
           <Typography className={classes.title} component='h3' color='#FFFFFF'>
             #FoodFeed
           </Typography>

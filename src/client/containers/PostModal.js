@@ -5,7 +5,7 @@ import FeedPost from '../presentational/FeedPost'
 import {withStyles} from '@material-ui/core/styles';
 
 const styles = {
-  container: {
+  posts: {
     position: 'fixed',
     background: 'white',
     width: 'fit-content',
@@ -55,7 +55,7 @@ class PostModal extends Component {
         onClose={this.closeModal}
       >
         <div
-          className={classes.container}
+          className={classes.posts}
         >
           <FeedPost/>
         </div>
