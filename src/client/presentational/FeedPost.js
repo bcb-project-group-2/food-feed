@@ -12,6 +12,7 @@ const styles = {
   posts: {
     minWidth: '23%',
     padding: '.5rem',
+    margin: 'auto',
   },
   card: {
     maxWidth: 345,
@@ -86,7 +87,7 @@ class FeedPost extends Component {
           <CardMedia
             className={classes.media}
             image={this.props.url}
-            title="Contemplative Reptile"
+            title=""
           />
           <CardContent style={{paddingBottom: 0}}>
             <Typography
