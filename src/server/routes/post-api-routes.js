@@ -11,7 +11,7 @@ module.exports = function (app) {
   //get all distinct moods
   app.get('/api/discover/moods', (req, res) => {
     db.Post.findAll({
-      order: ['createdAt', 'DESC'],
+      order: ['id', 'DESC'],
       attributes: [
         db.sequelize.fn('DISTINCT', db.sequelize.col('category')),
         'category'
@@ -23,7 +23,7 @@ module.exports = function (app) {
   //get distinct moods where user participates
   app.get('/api/discover/moods/:id', (req, res) => {
     db.Post.findAll({
-      order: ['createdAt', 'DESC'],
+      order: ['id', 'DESC'],
       where: {UserId: req.params.id},
       attributes: [
         db.sequelize.fn('DISTINCT', db.sequelize.col('category')),
