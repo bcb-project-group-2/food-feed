@@ -58,8 +58,17 @@ class FeedPost extends Component {
     this.handleModalOpen = this.handleModalOpen.bind(this);
   }
 
-  handleModalOpen(id) {
-    this.props.dispatch({type: 'TOGGLE_MODAL'})
+  handleModalOpen() {
+    this.props.dispatch({
+      type: 'TOGGLE_MODAL',
+      payload: {
+        post: {
+          name: 'post',
+          id: this.props.id,
+          open: true,
+        }
+      }
+    })
   }
 
   buttonFill(classes) {

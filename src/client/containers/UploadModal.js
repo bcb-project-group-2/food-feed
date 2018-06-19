@@ -99,13 +99,16 @@ class UploadModal extends Component {
       this.props.dispatch({
         type: 'TOGGLE_MODAL', payload: 'upload'
       });
-      this.props.dispatch({type:'SWIPE', payload: this.props.view.index})
+      this.props.dispatch({type: 'SWIPE', payload: this.props.view.index})
     })
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return(
-    this.props.view.modals.upload !== nextProps.view.modals.upload ||
+    if (!nextProps.view.modals.upload) {
+      return false
+    }
+    return (
+      this.props.view.modals.upload !== nextProps.view.modals.upload ||
       this.state.imageUrl !== nextState.imageUrl
     )
 

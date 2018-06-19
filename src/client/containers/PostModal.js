@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Modal from '@material-ui/core/Modal';
-import FeedPost from '../presentational/FeedPost'
+import Card from '@material-ui/core/Card'
+import CardMedia from '@material-ui/core/CardMedia'
 import {withStyles} from '@material-ui/core/styles';
 
 const styles = {
@@ -30,21 +31,29 @@ class PostModal extends Component {
   }
 
   closeModal() {
-    this.props.dispatch({type: 'TOGGLE_MODEL'})
+    this.props.dispatch({
+      type: 'TOGGLE_MODEL',
+      payload: {
+        post: {
+          open: false,
+        }
+      }
+    })
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.open !== nextProps.view.modalOpen) {
+    if (this.state.open !== !!nextProps.view.modals.post.open) {
       this.setState({
-        open: nextProps.view.modalOpen,
+        open: nextProps.view.modals.post.open,
         // content: nextProps.post.open,
       })
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    return this.state.open !== nextProps.view.modalOpen
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.open || nextProps.view.modals.post.open;
   }
+
 
 
   render() {
@@ -57,7 +66,6 @@ class PostModal extends Component {
         <div
           className={classes.posts}
         >
-          <FeedPost/>
         </div>
       </Modal>
     )

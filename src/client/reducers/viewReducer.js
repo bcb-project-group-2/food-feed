@@ -2,7 +2,10 @@ export default function reducer(
   state = {
     index: 0,
     modals: {
-      post: false,
+      post: {
+        id: null,
+        open: false,
+      },
       upload: false,
     },
   },
@@ -18,7 +21,7 @@ export default function reducer(
       ...state,
       modals: {
         ...state.modals,
-        [action.payload]: !state.modals[action.payload]
+        ...action.payload
       }
     }
   }
