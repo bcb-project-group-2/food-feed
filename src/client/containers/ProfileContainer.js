@@ -25,9 +25,12 @@ const styles = {
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    backgroundColor: '#f6f6f6'
+    backgroundColor: '#f6f6f6',
+    transition: 'opacity 400ms',
+    animation: 'fadein 400ms'
   },
   bodyBar: {
+    animation: 'fadein 400ms',
     display: 'flex',
     flexFlow: 'row nowrap',
     justifyContent: 'center',
