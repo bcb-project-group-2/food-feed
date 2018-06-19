@@ -31,6 +31,7 @@ class SignInPageContainer extends Component {
         email: '',
         pass: '',
         passConf: '',
+        img: ''
       },
     };
 
@@ -71,7 +72,8 @@ class SignInPageContainer extends Component {
         createUser(
           this.inputs.signup.email,
           this.inputs.signup.user,
-          this.inputs.signup.pass
+          this.inputs.signup.pass,
+          this.inputs.signup.img,
         )
       )
     }

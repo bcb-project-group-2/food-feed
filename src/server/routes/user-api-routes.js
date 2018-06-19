@@ -10,7 +10,14 @@ module.exports = function (app) {
     }).then(function (dbUser) {
       res.json(dbUser)
     })
-  })
+  });
+
+  //get user owned posts
+  app.get('/api/users/posts/:id', (req, res) => {
+    db.Post.findAll({
+      where: {UserId: req.params.id}
+    }).then(data => res.json(data))
+  });
 
   //update the user table a new entry
   app.post("/api/users", function (req, res) {
@@ -19,6 +26,7 @@ module.exports = function (app) {
         id: dbUser.id,
         user_email: dbUser.user_email,
         user_name: dbUser.user_name,
+        profile_picture: dbUser.profile_picture,
       })
     });
   });

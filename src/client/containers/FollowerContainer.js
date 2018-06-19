@@ -7,7 +7,7 @@ import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 
 const styles = {
-  container: {
+  posts: {
     width: '100%',
     overflow: 'auto',
     textAlign: 'center',
@@ -33,7 +33,7 @@ class FollowerContainer extends Component {
     const {classes} = this.props;
     return (
       <div id={this.props.type + '-container'}>
-        <Card className={classes.container}>
+        <Card className={classes.posts}>
           <CardHeader className={classes.header} title={this.props.type}/>
           <List className={classes.list}>
             <Follower

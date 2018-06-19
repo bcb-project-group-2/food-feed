@@ -3,13 +3,15 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton'
+import FileUpload from '!@material-ui/icons/FileUpload'
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
-import {Redirect} from 'react-router-dom'
+import axios from 'axios';
 
 
 const styles = theme => ({
-  container: {
+  posts: {
     width: 'fit-content',
     height: 'fit-content',
     padding: '2rem',
@@ -25,6 +27,13 @@ const styles = theme => ({
     width: '100% !important',
     margin: '1rem',
   },
+  imageUrl: {
+    width: '100% !importaint',
+    height: 'fit-content',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    alignItems: 'center',
+  },
   link: {
     marginTop: '1rem',
     textAlign: 'center'
@@ -33,14 +42,33 @@ const styles = theme => ({
 
 class SignInForm extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+
+    this.state = {
+      profileUrl: null
+    };
+
+    this.uploadUrlRef = React.createRef();
+    this.handleUpload = this.handleUpload.bind(this);
+  }
+
+  handleUpload() {
+    window.cloudinary.openUploadWidget(
+      {upload_preset: 'my_preset'},
+      (err, res) => {
+        if (err) throw err;
+        this.props.handleInputs('img', res[0].url);
+        this.setState({profileUrl: res[0].url})
+      },
+    );
+
   }
 
   render() {
     const {classes} = this.props;
     return (
-      <Card className={classes.container}>
-        <Typography className={classes.header} component='h3'>Sign In</Typography>
+      <Card className={classes.posts}>
+        <Typography className={classes.header} component='h3'>Sign up</Typography>
         <form
           id='sign-in-form'
           onSubmit={event => this.props.handleForm(event)}
@@ -84,11 +112,27 @@ class SignInForm extends Component {
             required
             id='email'
             label='Email Address'
-            placeholder='DavidBlanchard'
+            placeholder='DavidBlanchard@dfb.io'
             className={classes.textField}
             margin='normal'
             onChange={event => this.props.handleInputs('email', event.target.value)}
           />
+          <div className={classes.imageUrl}>
+            <TextField
+              value={this.state.profileUrl || null}
+              required
+              id='img'
+              label={this.state.profileUrl ? '': 'image url'}
+              margin='normal'
+              onChange={event => this.props.handleInputs('img', event.target.value)}
+              innerRef={this.uploadUrlRef}
+            />
+            <IconButton
+              onClick={this.handleUpload}
+            >
+              <FileUpload/>
+            </IconButton>
+          </div>
           <Button
             className={classes.textField}
             type='submit'
@@ -96,7 +140,7 @@ class SignInForm extends Component {
             color='primary'
             // onClick={() => this.props.handleSubmit(this.refs.form)}
           >
-            Sign In
+            Sign up
           </Button>
           <label htmlFor='login' style={{
             width: '100%',
@@ -137,6 +181,7 @@ class SignInForm extends Component {
       </Card>
     )
   }
-};
+}
+;
 
 export default withStyles(styles)(SignInForm)

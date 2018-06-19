@@ -1,7 +1,10 @@
 export default function reducer(
   state = {
     index: 0,
-    modalOpen: false,
+    modals: {
+      post: false,
+      upload: false,
+    },
   },
   action = {type: null, payload: 0}) {
   if (action.type === 'SWIPE') {
@@ -13,7 +16,10 @@ export default function reducer(
   else if(action.type === 'TOGGLE_MODAL') {
     return {
       ...state,
-      modalOpen: !state.modalOpen
+      modals: {
+        ...state.modals,
+        [action.payload]: !state.modals[action.payload]
+      }
     }
   }
   return {...state}

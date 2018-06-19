@@ -5,20 +5,29 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
+import Avatar from '@material-ui/core/Avatar'
 import {Favorite, FavoriteBorder, MoreHoriz} from '@material-ui/icons'
 import {withStyles} from '@material-ui/core/styles'
 
 const styles = {
-  container: {
-    minWidth: '23%',
+  posts: {
+    // minWidth: '23% !important',
+    maxWidth: '100%',
     padding: '.5rem',
+    margin: 'auto',
   },
   card: {
-    maxWidth: 345,
+    width: 'calc(100vh/2 - .5rem)',
+    // maxWidth: 345,
+    maxWidth: '100%',
+    height: '35% !important',
     margin: 'auto',
+    padding: '0',
+    overflow: 'scroll'
   },
   media: {
     height: 0,
+    width: '100% !important',
     paddingTop: '56.25%', // 16:9
   },
   moreIcon: {
@@ -65,17 +74,22 @@ class FeedPost extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.reRender) {
+    if (this.reRender || this.props.likecount !== nextProps.likecount) {
       this.reRender = false;
       return true;
     }
     return false;
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    if (this.state.fav === false && nextState.fav === true) {
+    }
+  }
+
   render() {
     const {classes} = this.props;
     return (
-      <div className={classes.container} style={{animation: 'fadein 200ms'}}>
+      <div className={classes.posts} style={{animation: 'fadein 200ms'}}>
         <Card className={classes.card}>
           <div>
             <MoreHoriz
@@ -85,28 +99,33 @@ class FeedPost extends Component {
           </div>
           <CardMedia
             className={classes.media}
-            image="https://hightimes.com/wp-content/uploads/2017/04/Arizona-Police-Lizard.jpg"
-            title="Contemplative Reptile"
+            image={this.props.url}
+            title=""
           />
           <CardContent style={{paddingBottom: 0}}>
-            <Typography element='h4'>
-              Post
+            <Typography
+              element='h4'
+              style={{
+                borderBottom: 'solid 1px gray',
+                paddingBottom: '.4rem',
+              }}
+            >
+              {this.props.title}
             </Typography>
             <Typography element='p'>
-              post post post
-              post post post
-              post post post
-              post post post
-              post post post
-              post post post
-              post post post
-              post post post
-              post post post
+              {this.props.description || 'Food feed for your friends and your food. Do not fret my child, the food has come to feed'}
             </Typography>
-            <div style={{display: 'flex', flexFlow: 'row-reverse nowrap'}}>
+            <div style={{
+              display: 'flex',
+              flexFlow: 'row-reverse nowrap',
+              alignItems: 'center'
+            }}>
               <IconButton onClick={this.favorite} disableRipple={true}>
                 {this.buttonFill(classes)}
               </IconButton>
+              <Avatar style={{marginRight: '.5rem'}}>
+                {this.props.likecount || '0'}
+              </Avatar>
             </div>
           </CardContent>
         </Card>

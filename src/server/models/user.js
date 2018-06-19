@@ -5,8 +5,6 @@ module.exports = function(sequelize, DataTypes) {
     password: DataTypes.STRING,
     profile_picture: {
       type: DataTypes.TEXT,
-      allowNull: true
-      // allowNull: true, defaultValue: 'http://www.theamericanconservative.com/wp-content/uploads/2016/10/Clinton-4-554x350.jpg'
     },
   },{
     "timestamps": false

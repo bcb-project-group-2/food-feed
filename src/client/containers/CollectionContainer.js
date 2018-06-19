@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux'
+import {getPostsByMood} from "../actions/posts";
 import CollectionPortrait from '../presentational/CollectionPortrait';
-import CollectionPosts from '../presentational/CollectionPosts';
+import FeedPost from '../presentational/FeedPost'
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
 import classNames from 'classnames';
 
 
 const styles = {
-  container: {
+  posts: {
     padding: '1.5rem 0',
     width: '100%',
   },
@@ -48,16 +50,27 @@ const styles = {
     // animation: 'expand 300ms',
     height: '100%',
     overflow: 'hidden',
-  }
+  },
+  postContainer: {
+    display: 'flex',
+    flexFlow: 'row wrap',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    padding: '1rem 0',
+  },
 };
 
+@connect(store => store)
 class CollectionContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: false
+      expanded: false,
+      offset: 0,
+      portraits: []
     };
 
+    // this.getPortraitImage = this.getPortraitImage.bind(this);
     this.expand = this.expand.bind(this);
   }
 
@@ -69,18 +82,57 @@ class CollectionContainer extends Component {
     this.setState({expanded: !this.state.expanded})
   }
 
-  getImages() {
-    //do some redux stuff, get urls
+  createPosts() {
+    if (this.props.post.moodPosts[this.props.category]) {
+      return this.props.post.moodPosts[this.props.category].map(post => (
+        <div
+          className='post-container'
+          style={{
+          width: '45%',
+          maxWidth: '50%',
+          padding: '0 2.5%',
+          minWidth: 'fit-content',
+          // margin: 'auto'
+        }}>
+          <FeedPost
+            {...post}
+          />
+        </div>
+      ))
+    }
+  }
+
+  componentDidMount() {
+    if (!this.props.post.moodPosts[this.props.category]) {
+      this.props.dispatch(getPostsByMood(this.props.category, this.state.offset))
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.post.moodPosts[this.props.category]) {
+      let images = nextProps.post.moodPosts[this.props.category]
+        .slice(0, 5).map(post => post.url);
+      this.setState({
+        portraits: images
+      })
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      nextProps.post.moodPosts[this.props.category] !==
+      this.props.post.moodPosts[this.props.category] ||
+      this.state !== nextState
+    )
   }
 
   render() {
     const {classes} = this.props;
     return (
-      <div className={classNames('collection-container', classes.container)}>
+      <div className={classNames('collection-container', classes.posts)}>
         <div className={'collection-main'}>
           <CollectionPortrait
-            // image={this.props.mainImage}
-            image='https://www.healthyfood.co.nz/wp-content/uploads/2017/03/Sushi_in_10_steps-2000x1332.jpg'
+            image={this.state.portraits[0] || 'https://uploads-ssl.webflow.com/57e5747bd0ac813956df4e96/5aebae14c6d254621d81f826_placeholder.png'}
             handleClick={this.mainPortraitClick}
             portrait={true}
             center={true}
@@ -88,36 +140,32 @@ class CollectionContainer extends Component {
           <div className={classes.divider}>
             <hr className={classes.horizontal}/>
             <Typography component='h2' className={classes.collectionTitle}>
-              Sushi
+              {this.props.category}
             </Typography>
             <hr className={classes.horizontal}/>
           </div>
         </div>
         <div className={classes.carousel}>
           <CollectionPortrait
-            // image={this.props.mainImage}
-            image='https://natashaskitchen.com/wp-content/uploads/2013/10/Sushi-Rice-and-California-Rolls-3-1-600x900.jpg'
+            image={this.state.portraits[1] || 'https://uploads-ssl.webflow.com/57e5747bd0ac813956df4e96/5aebae14c6d254621d81f826_placeholder.png'}
             handleClick={this.mainPortraitClick}
             portrait={false}
             center={true}
           />
           <CollectionPortrait
-            // image={this.props.mainImage}
-            image='http://iamafoodblog.com/wp-content/uploads/2017/10/untitled-1953.jpg'
+            image={this.state.portraits[2] || 'https://uploads-ssl.webflow.com/57e5747bd0ac813956df4e96/5aebae14c6d254621d81f826_placeholder.png'}
             handleClick={this.mainPortraitClick}
             portrait={false}
             center={true}
           />
           <CollectionPortrait
-            // image={this.props.mainImage}
-            image='http://www.latimes.com/resizer/NkvSEc6uY39eX4CLyszBZkOkdYU=/1400x0/arc-anglerfish-arc2-prod-tronc.s3.amazonaws.com/public/2PS3JQDYNNG27HIWBTQZNZC7UE.jpg'
+            image={this.state.portraits[3] || 'https://uploads-ssl.webflow.com/57e5747bd0ac813956df4e96/5aebae14c6d254621d81f826_placeholder.png'}
             handleClick={this.mainPortraitClick}
             portrait={false}
             center={true}
           />
           <CollectionPortrait
-            // image={this.props.mainImage}
-            image='https://hips.hearstapps.com/del.h-cdn.co/assets/18/04/1516666104-delish-greek-sushi-stills-2.jpg'
+            image={this.state.portraits[4] || 'https://uploads-ssl.webflow.com/57e5747bd0ac813956df4e96/5aebae14c6d254621d81f826_placeholder.png'}
             handleClick={this.mainPortraitClick}
             portrait={false}
             center={true}
@@ -135,7 +183,9 @@ class CollectionContainer extends Component {
         <div style={{height: 'auto'}}>
           <div
             className={classNames(this.state.expanded ? classes.expanded : classes.expandable, 'expandable-collection')}>
-            <CollectionPosts/>
+            <div className={classes.postContainer}>
+              {this.createPosts()}
+            </div>
           </div>
         </div>
       </div>

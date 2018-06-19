@@ -4,8 +4,10 @@ import {connect} from 'react-redux'
 import SwipeableViews from 'react-swipeable-views'
 import Typography from '@material-ui/core/Typography';
 import PostModal from './PostModal'
+import UploadModal from './UploadModal'
 import createLazyContainer from 'react-lazy-import';
 import Loading from '../presentational/Loading'
+import axios from 'axios'
 
 const FeedContainer = createLazyContainer(
   () => import('./FeedContainer'), Loading);
@@ -43,6 +45,23 @@ class DashboardBodyContainer extends Component {
     }
   };
 
+  componentDidMount() {
+    if (!this.props.user.currentUser.id) {
+      if (!localStorage.id) {
+        window.location = '/'
+      }
+      else {
+        axios.get(`/api/users/${localStorage.id}`).then(res => {
+          console.log('response', res.data);
+          this.props.dispatch({
+            type: 'AUTHENTICATE_USER_SUCCESS',
+            payload: res.data,
+          })
+        })
+      }
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.view.index !== this.state.index) {
       this.setState({
@@ -51,8 +70,9 @@ class DashboardBodyContainer extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.view.index !== this.state.index;
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.view.index !== this.state.index ||
+      this.props.user.currentUser !== nextProps.user.currentUser;
   }
 
   handleChangeIndex = index => {
@@ -61,22 +81,28 @@ class DashboardBodyContainer extends Component {
 
   render() {
     const {classes} = this.props;
-    return (
-      <div id='swipe-container'>
-        <SwipeableViews
-          index={this.state.index}
-          axis={'x'}
-          onChangeIndex={this.handleChangeIndex}
-        >
-          <FeedContainer/>
-          <ActivityContainer/>
-          <ProfileContainer/>
-        </SwipeableViews>
-        <PostModal/>
-      </div>
-    )
+    if (this.props.user.currentUser.id) {
+      return (
+        <div id='swipe-container'>
+          <SwipeableViews
+            index={this.state.index}
+            axis={'x'}
+            onChangeIndex={this.handleChangeIndex}
+          >
+            <FeedContainer/>
+            <ActivityContainer/>
+            <ProfileContainer owner={this.props.user.currentUser}/>
+          </SwipeableViews>
+          <PostModal/>
+          <UploadModal/>
+        </div>
+      )
+    }
+    else {
+      return <Loading/>
+    }
   }
-
 }
+
 
 export default withStyles(styles)(DashboardBodyContainer);

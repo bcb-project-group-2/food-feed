@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import Card from '@material-ui/core/CardHeader'
+import {connect} from 'react-redux'
+import {getUserCreatedPosts} from "../actions/posts";
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import AppBar from '@material-ui/core/AppBar'
@@ -17,11 +18,6 @@ const ProfileMoodContainer = CreateLazyContainer(
   () => import('./ProfileMoodContainer'), Loading);
 
 const styles = {
-  // userSection: {
-  //   display: 'grid',
-  //   gridTemplateColumns: '50% 50%',
-  //   gridTemplateRows: 'auto'
-  // }
   profilePortrait: {
     display: 'flex',
     flexFlow: 'column nowrap',
@@ -38,11 +34,13 @@ const styles = {
   }
 };
 
+@connect(store => store)
 class ProfileContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      index: 0
+      index: 0,
+      userPosts: [],
     };
 
     this.handleSwipe = this.handleSwipe.bind(this)
@@ -50,69 +48,88 @@ class ProfileContainer extends Component {
 
   handleSwipe(event, index) {
     this.setState({
+      ...this.state,
       index
     })
+  }
 
+  componentDidMount() {
+    this.props.dispatch(getUserCreatedPosts(this.props.owner.id))
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if (nextProps.owner.posts !== this.state.userPosts) {
+      this.setState({
+        ...this.state,
+        userPosts: nextProps.owner.posts
+      })
+    }
   }
 
   render() {
     const {index} = this.state;
     const {classes} = this.props;
 
-    return (
-      <div id='profile-wrapper'>
-        <div
-          id='profile-portrait'
-          className={classes.profilePortrait}
-        >
-          <CollectionPortrait
-            image='http://i0.kym-cdn.com/photos/images/original/001/037/327/1e5.jpg'
-            portrait='true'
-            center={false}
-          />
-          <div>
-            <Typography component='h2' variant='headline' style={{fontSize: 'inherit'}}>
-              Benoctopus
-            </Typography>
-            <Typography component='h2' variant='subheading'>
-              7 Posts | 3 Followers | 7 Following
-            </Typography>
+    if (this.props.owner) {
+      return (
+        <div id='profile-wrapper'>
+          <div
+            id='profile-portrait'
+            className={classes.profilePortrait}
+          >
+            <CollectionPortrait
+              image={this.props.owner.profile_picture || null}
+              portrait='true'
+              center={false}
+            />
+            <div>
+              <Typography component='h2' variant='headline' style={{fontSize: 'inherit'}}>
+                {this.props.owner.user_name}
+              </Typography>
+              <Typography component='h2' variant='subheading'>
+                {this.state.userPosts ? this.state.userPosts.length : 0} Posts | 3 Followers | 7 Following
+              </Typography>
+            </div>
+            <Button variant='contained' color='primary'>
+              follow
+            </Button>
           </div>
-          <Button variant='contained' color='primary'>
-            follow
-          </Button>
-        </div>
-        <div
-          id='profile-body'
-        >
-          <AppBar
-            id='profile-body-bar'
-            className={classes.bodyBar}
-            color='secondary'
-            position='static'
+          <div
+            id='profile-body'
           >
-            <Tabs
-              className={classes.tabs}
-              value={index}
-              indicatorColor='primary'
-              onChange={this.handleSwipe}
+            <AppBar
+              id='profile-body-bar'
+              className={classes.bodyBar}
+              color='secondary'
+              position='static'
             >
-              <Tab className={classes.tab} label='posts'/>
-              <Tab className={classes.tab} label='moods'/>
-            </Tabs>
-          </AppBar>
-          <SwipeableViews
-            index={index}
-            axis={'x'}
-            onChangeIndex={index => this.handleSwipe(null, index)}
-            style={{overflow: 'hidden'}}
-          >
-            <ProfilePostsContainer/>
-            <ProfileMoodContainer/>
-          </SwipeableViews>
+              <Tabs
+                className={classes.tabs}
+                value={index}
+                indicatorColor='primary'
+                onChange={this.handleSwipe}
+              >
+                <Tab className={classes.tab} label='posts'/>
+                <Tab className={classes.tab} label='moods'/>
+              </Tabs>
+            </AppBar>
+            <SwipeableViews
+              index={index}
+              axis={'x'}
+              onChangeIndex={index => this.handleSwipe(null, index)}
+              style={{overflow: 'hidden'}}
+            >
+              <ProfilePostsContainer/>
+              <ProfileMoodContainer/>
+            </SwipeableViews>
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
+    else {
+      return null
+    }
   }
 }
 

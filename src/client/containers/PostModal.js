@@ -55,7 +55,7 @@ class PostModal extends Component {
         onClose={this.closeModal}
       >
         <div
-          className={classes.container}
+          className={classes.posts}
         >
           <FeedPost/>
         </div>
