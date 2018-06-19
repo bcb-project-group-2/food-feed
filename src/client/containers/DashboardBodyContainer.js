@@ -81,21 +81,26 @@ class DashboardBodyContainer extends Component {
 
   render() {
     const {classes} = this.props;
-    return (
-      <div id='swipe-container'>
-        <SwipeableViews
-          index={this.state.index}
-          axis={'x'}
-          onChangeIndex={this.handleChangeIndex}
-        >
-          <FeedContainer/>
-          <ActivityContainer/>
-          <ProfileContainer/>
-        </SwipeableViews>
-        <PostModal/>
-        <UploadModal/>
-      </div>
-    )
+    try {
+      return (
+        <div id='swipe-container'>
+          <SwipeableViews
+            index={this.state.index}
+            axis={'x'}
+            onChangeIndex={this.handleChangeIndex}
+          >
+            <FeedContainer/>
+            <ActivityContainer/>
+            <ProfileContainer owner={this.props.user.currentUser.id}/>
+          </SwipeableViews>
+          <PostModal/>
+          <UploadModal/>
+        </div>
+      )
+    }
+    catch(e) {
+      return <Loading/>
+    }
   }
 
 }

@@ -186,6 +186,9 @@ body {
     #sign-in-form-container {
       grid-column: 2; } }
 
+@media only screen and (max-width: 1129px) {
+  .post-container {
+    margin: auto; } }
 #activity-wrapper {
   display: grid;
   grid-template-columns: 33.33%  33.33%  33.33%; }

@@ -54,6 +54,8 @@ const styles = {
   postContainer: {
     display: 'flex',
     flexFlow: 'row wrap',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
     padding: '1rem 0',
   },
 };
@@ -83,15 +85,25 @@ class CollectionContainer extends Component {
   createPosts() {
     if (this.props.post.moodPosts[this.props.category]) {
       return this.props.post.moodPosts[this.props.category].map(post => (
-        <FeedPost
-          {...post}
-        />
+        <div
+          className='post-container'
+          style={{
+          width: '45%',
+          maxWidth: '50%',
+          padding: '0 2.5%',
+          minWidth: 'fit-content',
+          // margin: 'auto'
+        }}>
+          <FeedPost
+            {...post}
+          />
+        </div>
       ))
     }
   }
 
   componentDidMount() {
-    if (!this.props.post.moodPosts[this.props.category]){
+    if (!this.props.post.moodPosts[this.props.category]) {
       this.props.dispatch(getPostsByMood(this.props.category, this.state.offset))
     }
   }
