@@ -31,3 +31,12 @@ export function getPostsByMood(mood, offset) {
       })
   }
 }
+
+export function getUserCreatedPosts(id) {
+  return function(dispatch){
+    axios.get(`/api/users/posts/${id}`)
+      .then(res => {
+        dispatch({action: 'STORE_USER_POSTS', payload: res.data})
+      })
+  }
+}

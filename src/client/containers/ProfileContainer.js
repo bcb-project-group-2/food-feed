@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
+import {getUserCreatedPosts} from "../actions/posts";
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import AppBar from '@material-ui/core/AppBar'
@@ -47,28 +48,30 @@ class ProfileContainer extends Component {
 
   handleSwipe(event, index) {
     this.setState({
+      ...this.state,
       index
     })
   }
 
-  getUserPosts() {
-    let userPosts = [];
-    Object.values(this.props.post.moodPosts).forEach(mood => {
-      userPosts = [
-        ...userPosts,
-        ...mood.filter(post => post.id === this.props.user.currentUser.id)
-      ]
-    });
-    this.setState({
-      userPosts
-    })
+  componentDidMount() {
+    this.props.dispatch(getUserCreatedPosts(this.props.owner.id))
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if (nextProps.owner.posts !== this.state.userPosts) {
+      this.setState({
+        ...this.state,
+        userPosts: nextProps.owner.posts
+      })
+    }
   }
 
   render() {
     const {index} = this.state;
     const {classes} = this.props;
 
-    if (this.props.user.currentUser) {
+    if (this.props.owner) {
       return (
         <div id='profile-wrapper'>
           <div
@@ -76,16 +79,16 @@ class ProfileContainer extends Component {
             className={classes.profilePortrait}
           >
             <CollectionPortrait
-              image={this.props.user.currentUser.profile_picture || null}
+              image={this.props.owner.profile_picture || null}
               portrait='true'
               center={false}
             />
             <div>
               <Typography component='h2' variant='headline' style={{fontSize: 'inherit'}}>
-                {this.props.user.currentUser.user_name}
+                {this.props.owner.user_name}
               </Typography>
               <Typography component='h2' variant='subheading'>
-                {this.state.userPosts.length} Posts | 3 Followers | 7 Following
+                {this.state.userPosts ? this.state.userPosts.length : 0} Posts | 3 Followers | 7 Following
               </Typography>
             </div>
             <Button variant='contained' color='primary'>

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import axios from 'axios'
-import {getPostsByMood} from "../actions/posts";
+import {getPostsByMood, getUserCreatedPosts} from "../actions/posts";
 import Modal from '@material-ui/core/Modal';
 import Card from '@material-ui/core/Card'
 import Button from '@material-ui/core/Button'
@@ -95,6 +95,7 @@ class UploadModal extends Component {
       UserId: id,
     }).then(() => {
       this.props.dispatch(getPostsByMood(inputs.mood, 0));
+      this.props.dispatch(getUserCreatedPosts(id));
       this.props.dispatch({
         type: 'TOGGLE_MODAL', payload: 'upload'
       });

@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import SwipeableViews from 'react-swipeable-views'
 import Typography from '@material-ui/core/Typography';
 import PostModal from './PostModal'
-import UploadModal from  './UploadModal'
+import UploadModal from './UploadModal'
 import createLazyContainer from 'react-lazy-import';
 import Loading from '../presentational/Loading'
 import axios from 'axios'
@@ -46,13 +46,13 @@ class DashboardBodyContainer extends Component {
   };
 
   componentDidMount() {
-    if (!this.props.user.currentUser) {
+    if (!this.props.user.currentUser.id) {
       if (!localStorage.id) {
         window.location = '/'
       }
       else {
         axios.get(`/api/users/${localStorage.id}`).then(res => {
-          console.log(res.data);
+          console.log('response', res.data);
           this.props.dispatch({
             type: 'AUTHENTICATE_USER_SUCCESS',
             payload: res.data,
@@ -81,7 +81,7 @@ class DashboardBodyContainer extends Component {
 
   render() {
     const {classes} = this.props;
-    try {
+    if (this.props.user.currentUser.id) {
       return (
         <div id='swipe-container'>
           <SwipeableViews
@@ -91,18 +91,18 @@ class DashboardBodyContainer extends Component {
           >
             <FeedContainer/>
             <ActivityContainer/>
-            <ProfileContainer owner={this.props.user.currentUser.id}/>
+            <ProfileContainer owner={this.props.user.currentUser}/>
           </SwipeableViews>
           <PostModal/>
           <UploadModal/>
         </div>
       )
     }
-    catch(e) {
+    else {
       return <Loading/>
     }
   }
-
 }
+
 
 export default withStyles(styles)(DashboardBodyContainer);

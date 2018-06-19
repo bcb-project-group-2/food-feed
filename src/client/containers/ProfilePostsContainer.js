@@ -35,12 +35,6 @@ class ProfilePostsContainer extends Component {
             </Typography>
             <hr className={classes.horizontals}/>
           </div>
-          <FeedPost/>
-          <FeedPost/>
-          <FeedPost/>
-          <FeedPost/>
-          <FeedPost/>
-          <FeedPost/>
         </div>
         <div className='profile-post-section'>
           <div className={classes.smallHeader}>
@@ -50,12 +44,6 @@ class ProfilePostsContainer extends Component {
             </Typography>
             <hr className={classes.horizontals}/>
           </div>
-          <FeedPost/>
-          <FeedPost/>
-          <FeedPost/>
-          <FeedPost/>
-          <FeedPost/>
-          <FeedPost/>
         </div>
       </div>
     )

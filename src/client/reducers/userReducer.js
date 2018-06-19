@@ -5,7 +5,9 @@ export default function reducer(
       fetched: false,
       error: null,
     },
-    currentUser: null
+    currentUser: {
+      posts: []
+    }
   },
   action = {type: null}) {
   switch (action.type) {
@@ -30,6 +32,7 @@ export default function reducer(
       }
     }
     case "AUTHENTICATE_USER_SUCCESS": {
+      localStorage.id = action.payload.id;
       return {
         ...state,
         status: {
@@ -39,7 +42,17 @@ export default function reducer(
           error: false,
         },
         currentUser: {
+          ...state.currentUser,
           ...action.payload,
+        }
+      }
+    }
+    case "STORE_USER_POSTS": {
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          posts: action.payload,
         }
       }
     }

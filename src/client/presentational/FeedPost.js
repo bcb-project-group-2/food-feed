@@ -6,7 +6,6 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import Avatar from '@material-ui/core/Avatar'
-import A
 import {Favorite, FavoriteBorder, MoreHoriz} from '@material-ui/icons'
 import {withStyles} from '@material-ui/core/styles'
 
@@ -84,8 +83,6 @@ class FeedPost extends Component {
 
   componentWillUpdate(nextProps, nextState) {
     if (this.state.fav === false && nextState.fav === true) {
-      axios.post()
-
     }
   }
 
