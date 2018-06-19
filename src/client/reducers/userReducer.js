@@ -52,7 +52,7 @@ export default function reducer(
         ...state,
         currentUser: {
           ...state.currentUser,
-          posts: action.payload,
+          posts: [...action.payload],
         }
       }
     }

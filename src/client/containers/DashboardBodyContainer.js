@@ -72,7 +72,8 @@ class DashboardBodyContainer extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return nextProps.view.index !== this.state.index ||
-      this.props.user.currentUser !== nextProps.user.currentUser;
+      this.props.user.currentUser !== nextProps.user.currentUser ||
+      this.props.user.currentUser.posts !== nextProps.user.currentUser.posts
   }
 
   handleChangeIndex = index => {

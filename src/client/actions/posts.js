@@ -37,7 +37,8 @@ export function getUserCreatedPosts(id) {
   return function(dispatch){
     axios.get(`/api/users/posts/${id}`)
       .then(res => {
-        dispatch({action: 'STORE_USER_POSTS', payload: res.data})
+        console.log('HERE', res.data)
+        dispatch({type: 'STORE_USER_POSTS', payload: res.data})
       })
   }
 }

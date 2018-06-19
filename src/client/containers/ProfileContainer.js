@@ -53,6 +53,17 @@ class ProfileContainer extends Component {
     })
   }
 
+  deriveMoods() {
+    let moods = [];
+    this.state.userPosts
+      .forEach(post => {
+        if (!moods.includes(post.category)) {
+          moods.push(post.category)
+        }
+      });
+    return moods;
+  }
+
   componentDidMount() {
     this.props.dispatch(getUserCreatedPosts(this.props.owner.id))
   }
@@ -120,8 +131,12 @@ class ProfileContainer extends Component {
               onChangeIndex={index => this.handleSwipe(null, index)}
               style={{overflow: 'hidden'}}
             >
-              <ProfilePostsContainer/>
-              <ProfileMoodContainer/>
+              <ProfilePostsContainer
+                posts={this.state.userPosts}
+              />
+              <ProfileMoodContainer
+                moods={this.deriveMoods()}
+              />
             </SwipeableViews>
           </div>
         </div>

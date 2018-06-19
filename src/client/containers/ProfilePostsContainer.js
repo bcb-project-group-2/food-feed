@@ -23,6 +23,14 @@ class ProfilePostsContainer extends Component {
     super(props);
   }
 
+  displayPosts() {
+    return this.props.posts.map(post => <FeedPost {...post}/>)
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return this.props.posts !== nextProps.posts;
+  }
+
   render() {
     const {classes} = this.props;
     return (
@@ -35,6 +43,7 @@ class ProfilePostsContainer extends Component {
             </Typography>
             <hr className={classes.horizontals}/>
           </div>
+          {this.displayPosts()}
         </div>
         <div className='profile-post-section'>
           <div className={classes.smallHeader}>
