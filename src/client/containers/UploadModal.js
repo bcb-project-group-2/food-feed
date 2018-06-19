@@ -97,16 +97,13 @@ class UploadModal extends Component {
       this.props.dispatch(getPostsByMood(inputs.mood, 0));
       this.props.dispatch(getUserCreatedPosts(id));
       this.props.dispatch({
-        type: 'TOGGLE_MODAL', payload: 'upload'
+        type: 'TOGGLE_MODAL', payload: {upload: false}
       });
       this.props.dispatch({type: 'SWIPE', payload: this.props.view.index})
     })
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (!nextProps.view.modals.upload) {
-      return false
-    }
     return (
       this.props.view.modals.upload !== nextProps.view.modals.upload ||
       this.state.imageUrl !== nextState.imageUrl
@@ -122,7 +119,7 @@ class UploadModal extends Component {
           <div className={classes.bar}>
             <IconButton
               onClick={() => this.props.dispatch({
-                type: 'TOGGLE_MODAL', payload: 'upload'
+                type: 'TOGGLE_MODAL', payload: {upload: false}
               })}
             >
               <Cancel/>

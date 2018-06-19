@@ -78,6 +78,7 @@ class FeedPost extends Component {
   }
 
   favorite() {
+    this.reRender = true;
     this.props.dispatch(
       likePost(
         this.props.user.currentUser.id,
@@ -85,8 +86,8 @@ class FeedPost extends Component {
         !this.props.user.currentUser.likes.includes(this.props.id)
       )
     );
-    this.props.dispatch(getLikesByPost());
-    this.props.dispatch(getLikesByUser(this.props.user.currentUser.id))
+      this.props.dispatch(getLikesByPost());
+      this.props.dispatch(getLikesByUser(this.props.user.currentUser.id))
   }
 
   componentDidMount() {
@@ -97,12 +98,10 @@ class FeedPost extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (
-      this.reRender ||
-      this.props.post.likes[this.props.id] !==
-      nextProps.post.likes[this.props.id] ||
+      this.state.likeCount !== nextState.likeCount ||
+      this.state !== nextState ||
       this.props.user.currentUser.likes.includes(this.props.id) !==
-      nextProps.user.currentUser.likes.includes(this.props.id) ||
-      this.state.likeCount !== nextState.likeCount
+      nextProps.user.currentUser.likes.includes(this.props.id)
     ) {
       this.reRender = false;
       return true;
@@ -110,10 +109,15 @@ class FeedPost extends Component {
     return false;
   }
 
+  componentWillUnmount() {
+    console.log('unmounting: ', this.props)
+  }
+
   componentWillReceiveProps(nextProps) {
     if (
       this.props.post.likes[this.props.id] !==
-      nextProps.post.likes[this.props.id]
+      nextProps.post.likes[this.props.id] ||
+      this.props.l
     ) {
       this.setState({
         likeCount: nextProps.post.likes[this.props.id]
@@ -122,8 +126,11 @@ class FeedPost extends Component {
   }
 
   render() {
+    // if (this.props.l && !this.state.likeCount) {
+    //   return null
+    // }
     const {classes} = this.props;
-    console.log(this.state.likeCount)
+    console.log(this.state.likeCount);
     return (
       <div className={classes.posts} style={{animation: 'fadein 200ms'}}>
         <Card className={classes.card}>

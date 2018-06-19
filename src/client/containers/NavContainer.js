@@ -86,7 +86,8 @@ class NavContainer extends Component {
           }}>
             <IconButton
               onClick={() => this.props.dispatch({
-                type: 'TOGGLE_MODAL', payload: 'upload'
+                type: 'TOGGLE_MODAL'
+                , payload: {upload: true}
               })}
             >
               <Avatar style={{background: '#BB35B9'}}>

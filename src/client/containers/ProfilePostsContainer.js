@@ -21,6 +21,9 @@ const styles = {
 class ProfilePostsContainer extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      likedPosts: []
+    }
   }
 
   displayPosts() {
@@ -41,10 +44,11 @@ class ProfilePostsContainer extends Component {
       )
     }
   }
+
   displayLikedPosts() {
-    if (!!this.props.likedPosts) {
-      console.log('liked', this.props.likedPosts)
-      return this.props.likedPosts.map(post => <FeedPost {...post}/>)
+    if (!!this.state.likedPosts) {
+      console.log('liked', this.state.likedPosts);
+      return this.state.likedPosts.map(post => <FeedPost {...{...post, l: true}} />)
     }
     else {
       return (
@@ -61,11 +65,20 @@ class ProfilePostsContainer extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    return (
-      this.props.posts !== nextProps.posts ||
-      this.props.likedPosts !== nextProps.likedPosts
-    );
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return (
+  //     this.props.posts !== nextProps.posts ||
+  //     this.props.likedPosts !== nextProps.likedPosts ||
+  //     this.state !== nextState
+  //   );
+  // }
+
+  componentWillReceiveProps(nextProps) {
+    nextProps.likedPosts.then(posts => {
+      this.setState({
+        likedPosts: posts
+      })
+    })
   }
 
   render() {

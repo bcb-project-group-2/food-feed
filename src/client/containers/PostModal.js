@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import Modal from '@material-ui/core/Modal';
 import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
+import FeedPost from '@material-ui/core'
 import {withStyles} from '@material-ui/core/styles';
 
 const styles = {

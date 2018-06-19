@@ -65,5 +65,18 @@ module.exports = function (app) {
     })
       .catch(e => res.end())
   });
+
+  app.get('/api/likes/liked/:id', (req, res) => {
+    db.Like.findAll({
+      where: {
+        UserId: req.params.id
+      },
+      include: [db.Post]
+    }).then(data => res.json(data))
+      .catch(e => {
+        console.log(e);
+        res.status(500)
+      })
+  })
 };
 

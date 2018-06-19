@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
+import axios from 'axios'
 import {getUserCreatedPosts} from "../actions/posts";
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
@@ -69,19 +70,16 @@ class ProfileContainer extends Component {
   }
 
   getLikedPosts() {
-    try {
-      const likedPosts = [];
-      Object.values(this.props.post.moodPosts).forEach(mood => {
-        mood.forEach(post => {
-          if (this.props.owner.likes.includes(post.id)) {
-            likedPosts.push(post)
-          }
+    return new Promise(resolve => {
+      axios.get('/api/likes/liked/' + this.props.owner.id)
+        .then(res => {
+          resolve(res.data.map(item => item.Post))
         })
-      });
-      console.log('liked', likedPosts);
-      return likedPosts
-    }
-    catch (e) {}
+        .catch(e => {
+          console.log(e);
+          resolve(null)
+        })
+    })
   }
 
   componentDidMount() {
