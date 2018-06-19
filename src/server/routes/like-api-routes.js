@@ -52,14 +52,14 @@ module.exports = function (app) {
     ).then(likes => {
       let likeCount = {};
       likes.forEach(like => {
-          if (Object.keys(likeCount).includes(like.PostId)) {
-            likeCount[like.PostId] += 1;
-          }
-          else {
-            likeCount[like.PostId] = 1;
+          if (!Object.keys(likeCount).includes(like.PostId)) {
+            likeCount[like.PostId] = 0
           }
         }
       );
+      likes.forEach(like => {
+        likeCount[like.PostId] = likeCount[like.PostId] + 1
+      });
       console.log(likeCount);
       res.json(likeCount);
     })

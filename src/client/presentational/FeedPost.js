@@ -5,10 +5,13 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
+import Cancel from '@material-ui/icons/Cancel'
+import CardHeader from '@material-ui/core/CardHeader'
 import Avatar from '@material-ui/core/Avatar'
 import {Favorite, FavoriteBorder, MoreHoriz} from '@material-ui/icons'
 import {withStyles} from '@material-ui/core/styles'
 import {likePost, getLikesByUser, getLikesByPost} from "../actions/posts";
+
 
 const styles = {
   posts: {
@@ -17,6 +20,12 @@ const styles = {
     padding: '.5rem',
     margin: 'auto',
   },
+  mposts: {
+    // minWidth: '23% !important',
+    maxWidth: '100%',
+    padding: '.5rem',
+    margin: 'none !important',
+  },
   card: {
     width: 'calc(100vh/2 - .5rem)',
     // maxWidth: 345,
@@ -24,7 +33,7 @@ const styles = {
     height: '35% !important',
     margin: 'auto',
     padding: '0',
-    overflow: 'scroll'
+    overflow: 'hidden'
   },
   media: {
     height: 0,
@@ -56,6 +65,7 @@ class FeedPost extends Component {
 
     this.favorite = this.favorite.bind(this);
     this.handleModalOpen = this.handleModalOpen.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
   }
 
   handleModalOpen() {
@@ -66,6 +76,19 @@ class FeedPost extends Component {
           name: 'post',
           id: this.props.id,
           open: true,
+        }
+      }
+    })
+  }
+
+  handleModalClose() {
+    this.props.dispatch({
+      type: 'TOGGLE_MODAL',
+      payload: {
+        post: {
+          name: 'post',
+          id: null,
+          open: false,
         }
       }
     })
@@ -86,8 +109,8 @@ class FeedPost extends Component {
         !this.props.user.currentUser.likes.includes(this.props.id)
       )
     );
-      this.props.dispatch(getLikesByPost());
-      this.props.dispatch(getLikesByUser(this.props.user.currentUser.id))
+    this.props.dispatch(getLikesByPost());
+    this.props.dispatch(getLikesByUser(this.props.user.currentUser.id))
   }
 
   componentDidMount() {
@@ -101,7 +124,8 @@ class FeedPost extends Component {
       this.state.likeCount !== nextState.likeCount ||
       this.state !== nextState ||
       this.props.user.currentUser.likes.includes(this.props.id) !==
-      nextProps.user.currentUser.likes.includes(this.props.id)
+      nextProps.user.currentUser.likes.includes(this.props.id) ||
+      this.props.m
     ) {
       this.reRender = false;
       return true;
@@ -132,12 +156,39 @@ class FeedPost extends Component {
     const {classes} = this.props;
     console.log(this.state.likeCount);
     return (
-      <div className={classes.posts} style={{animation: 'fadein 200ms'}}>
+      <div
+        className={!!this.props.m ? classes.mposts : classes.posts}
+        style={{animation: 'fadein 200ms'}}>
         <Card className={classes.card}>
+          {this.props.m ?
+            <div style={{
+              display: 'flex',
+              flexFlow: 'row-reverse nowrap',
+            }}>
+              <IconButton
+                onClick={this.handleModalClose}
+              >
+                <Cancel/>
+              </IconButton>
+              <Typography
+                variant='headline'
+                style={{
+                  textAlign: 'center',
+                  height: '3rem',
+                  width: '100%'
+                }}
+              >
+                Author : {this.props.authorName}
+              </Typography>
+            </div>
+            :
+            null
+          }
           <div>
             <MoreHoriz
               className={classes.moreIcon + ' ' + 'post-more'}
               onClick={this.handleModalOpen}
+              style={this.props.m ? {display: 'none'} : null}
             />
           </div>
           <CardMedia
@@ -165,7 +216,6 @@ class FeedPost extends Component {
             }}>
               <IconButton
                 onClick={this.favorite}
-                disableRipple={true}
               >
                 {this.buttonFill(classes)}
               </IconButton>

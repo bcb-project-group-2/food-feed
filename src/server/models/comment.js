@@ -6,14 +6,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    createdAt: {
-      type: Sequelize.DATE,
-      allowNull: true,
-    },
-    updatedAt: {
-      type: Sequelize.DATE,
-      allowNull: true,
-    }
   },{
     "timestamps": false
   });

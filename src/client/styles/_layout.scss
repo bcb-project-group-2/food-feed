@@ -81,6 +81,10 @@ body {
   text-wrap: normal;
 }
 
+.feed-post, .feed-post * {
+  overflow: hidden !important;
+}
+
 #sign-in-title {
   grid-row: 1;
   grid-column: span 2
