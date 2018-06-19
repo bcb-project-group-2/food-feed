@@ -1,7 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
   var Post = sequelize.define("Post", {
     url: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING(1234),
       allowNull: false,
     },
     title: { 
@@ -19,8 +19,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true,
     }
-  },{
-    "timestamps": false
   });
 
   Post.associate = function(models) {
