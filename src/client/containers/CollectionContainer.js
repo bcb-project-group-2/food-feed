@@ -91,10 +91,10 @@ class CollectionContainer extends Component {
           style={{
             animation: 'fadein 400ms',
             width: '45%',
-            maxWidth: '50%',
+            maxWidth: this.props.p ? '100%' : '50%',
             padding: '0 2.5%',
             minWidth: 'fit-content',
-            // margin: 'auto'
+            margin: this.props.p ? 'auto' : 'initial'
           }}>
           <FeedPost
             {...post}

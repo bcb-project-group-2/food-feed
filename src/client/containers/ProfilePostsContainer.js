@@ -24,11 +24,48 @@ class ProfilePostsContainer extends Component {
   }
 
   displayPosts() {
-    return this.props.posts.map(post => <FeedPost {...post}/>)
+    if (!!this.props.posts) {
+      return this.props.posts.map(post => <FeedPost {...post}/>)
+    }
+    else {
+      return (
+        <Typography
+          style={{
+            width: '100%',
+            textAlign: 'center',
+          }}
+          variant='subheading'
+        >
+          {'No Posts To Show :{'}
+        </Typography>
+      )
+    }
+  }
+  displayLikedPosts() {
+    if (!!this.props.likedPosts) {
+      console.log('liked', this.props.likedPosts)
+      return this.props.likedPosts.map(post => <FeedPost {...post}/>)
+    }
+    else {
+      return (
+        <Typography
+          style={{
+            width: '100%',
+            textAlign: 'center',
+          }}
+          variant='subheading'
+        >
+          {'No Posts To Show :{'}
+        </Typography>
+      )
+    }
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.props.posts !== nextProps.posts;
+    return (
+      this.props.posts !== nextProps.posts ||
+      this.props.likedPosts !== nextProps.likedPosts
+    );
   }
 
   render() {
@@ -53,6 +90,7 @@ class ProfilePostsContainer extends Component {
             </Typography>
             <hr className={classes.horizontals}/>
           </div>
+          {this.displayLikedPosts()}
         </div>
       </div>
     )

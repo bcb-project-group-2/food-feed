@@ -44,6 +44,7 @@ class ProfileContainer extends Component {
     this.state = {
       index: 0,
       userPosts: [],
+      likedPosts: [],
     };
 
     this.handleSwipe = this.handleSwipe.bind(this)
@@ -67,16 +68,36 @@ class ProfileContainer extends Component {
     return moods;
   }
 
+  getLikedPosts() {
+    try {
+      const likedPosts = [];
+      Object.values(this.props.post.moodPosts).forEach(mood => {
+        mood.forEach(post => {
+          if (this.props.owner.likes.includes(post.id)) {
+            likedPosts.push(post)
+          }
+        })
+      });
+      console.log('liked', likedPosts);
+      return likedPosts
+    }
+    catch (e) {}
+  }
+
   componentDidMount() {
     this.props.dispatch(getUserCreatedPosts(this.props.owner.id))
   }
 
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
-    if (nextProps.owner.posts !== this.state.userPosts) {
+    if (
+      nextProps.owner.posts !== this.state.userPosts ||
+      this.props.owner.likes !== nextProps.user.likes
+    ) {
       this.setState({
         ...this.state,
-        userPosts: nextProps.owner.posts
+        userPosts: nextProps.owner.posts,
+        likedPosts: this.getLikedPosts(),
       })
     }
   }
@@ -136,6 +157,7 @@ class ProfileContainer extends Component {
             >
               <ProfilePostsContainer
                 posts={this.state.userPosts}
+                likedPosts={this.state.likedPosts}
               />
               <ProfileMoodContainer
                 moods={this.deriveMoods()}

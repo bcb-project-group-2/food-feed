@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import MenuItem from '@material-ui/core/MenuItem';
+import ReactDOM from 'react-dom'
 import TextField from '@material-ui/core/TextField';
+import Popover from '@material-ui/core/Popover'
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
-import {Redirect} from 'react-router-dom'
 
 
 const styles = theme => ({
@@ -33,14 +33,35 @@ const styles = theme => ({
 
 class SignInForm extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
     const {classes} = this.props;
     return (
       <Card className={classes.posts}>
-        <Typography className={classes.header} component='h3'>Sign In</Typography>
+        <Typography
+          id='sign-in-title'
+          className={classes.header}
+          component='h3'
+        >
+          Sign In
+        </Typography>
+        <Popover
+          open={this.props.error.open}
+          anchorEl={document.getElementById('sign-in-title')}
+          onClose={this.handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <Typography className={classes.typography}>{this.props.error.message}</Typography>
+        </Popover>
         <form
           id='sign-in-form'
           onSubmit={event => this.props.handleForm(event)}

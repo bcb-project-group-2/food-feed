@@ -1,13 +1,12 @@
 import React, {Component} from 'react'
-import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import Popover from '@material-ui/core/Popover'
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import FileUpload from '!@material-ui/icons/FileUpload'
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
-import axios from 'axios';
 
 
 const styles = theme => ({
@@ -68,7 +67,28 @@ class SignInForm extends Component {
     const {classes} = this.props;
     return (
       <Card className={classes.posts}>
-        <Typography className={classes.header} component='h3'>Sign up</Typography>
+        <Typography
+          className={classes.header}
+          component='h3'
+          id='sign-up-title'
+        >
+          Sign up
+        </Typography>
+        <Popover
+          open={this.props.error.open}
+          anchorEl={document.getElementById('sign-up-title')}
+          onClose={this.handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <Typography className={classes.typography}>{this.props.error.message}</Typography>
+        </Popover>
         <form
           id='sign-in-form'
           onSubmit={event => this.props.handleForm(event)}
@@ -122,7 +142,7 @@ class SignInForm extends Component {
               value={this.state.profileUrl || null}
               required
               id='img'
-              label={this.state.profileUrl ? '': 'image url'}
+              label={this.state.profileUrl ? '' : 'image url'}
               margin='normal'
               onChange={event => this.props.handleInputs('img', event.target.value)}
               innerRef={this.uploadUrlRef}

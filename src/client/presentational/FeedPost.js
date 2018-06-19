@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Avatar from '@material-ui/core/Avatar'
 import {Favorite, FavoriteBorder, MoreHoriz} from '@material-ui/icons'
 import {withStyles} from '@material-ui/core/styles'
+import {likePost, getLikesByUser, getLikesByPost} from "../actions/posts";
 
 const styles = {
   posts: {
@@ -48,7 +49,8 @@ class FeedPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fav: false
+      fav: false,
+      likeCount: 0,
     };
     this.reRender = false;
 
@@ -61,33 +63,58 @@ class FeedPost extends Component {
   }
 
   buttonFill(classes) {
-    return this.state.fav ?
+    return this.props.user.currentUser.likes.includes(this.props.id) ?
       <Favorite className={classes.favIcon}/>
       : <FavoriteBorder className={classes.favIcon}/>;
   }
 
   favorite() {
-    this.reRender = true;
+    this.props.dispatch(
+      likePost(
+        this.props.user.currentUser.id,
+        this.props.id,
+        !this.props.user.currentUser.likes.includes(this.props.id)
+      )
+    );
+    this.props.dispatch(getLikesByPost());
+    this.props.dispatch(getLikesByUser(this.props.user.currentUser.id))
+  }
+
+  componentDidMount() {
     this.setState({
-      fav: !this.state.fav
+      likeCount: this.props.post.likes[this.props.id]
     })
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (this.reRender || this.props.likecount !== nextProps.likecount) {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.reRender ||
+      this.props.post.likes[this.props.id] !==
+      nextProps.post.likes[this.props.id] ||
+      this.props.user.currentUser.likes.includes(this.props.id) !==
+      nextProps.user.currentUser.likes.includes(this.props.id) ||
+      this.state.likeCount !== nextState.likeCount
+    ) {
       this.reRender = false;
       return true;
     }
     return false;
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    if (this.state.fav === false && nextState.fav === true) {
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.post.likes[this.props.id] !==
+      nextProps.post.likes[this.props.id]
+    ) {
+      this.setState({
+        likeCount: nextProps.post.likes[this.props.id]
+      })
     }
   }
 
   render() {
     const {classes} = this.props;
+    console.log(this.state.likeCount)
     return (
       <div className={classes.posts} style={{animation: 'fadein 200ms'}}>
         <Card className={classes.card}>
@@ -120,11 +147,14 @@ class FeedPost extends Component {
               flexFlow: 'row-reverse nowrap',
               alignItems: 'center'
             }}>
-              <IconButton onClick={this.favorite} disableRipple={true}>
+              <IconButton
+                onClick={this.favorite}
+                disableRipple={true}
+              >
                 {this.buttonFill(classes)}
               </IconButton>
               <Avatar style={{marginRight: '.5rem'}}>
-                {this.props.likecount || '0'}
+                {this.state.likeCount || '0'}
               </Avatar>
             </div>
           </CardContent>

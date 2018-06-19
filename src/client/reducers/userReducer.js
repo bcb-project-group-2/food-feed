@@ -6,7 +6,8 @@ export default function reducer(
       error: null,
     },
     currentUser: {
-      posts: []
+      posts: [],
+      likes: [],
     }
   },
   action = {type: null}) {
@@ -53,6 +54,15 @@ export default function reducer(
         currentUser: {
           ...state.currentUser,
           posts: [...action.payload],
+        }
+      }
+    }
+    case "STORE_USER_LIKES": {
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          likes: action.payload
         }
       }
     }

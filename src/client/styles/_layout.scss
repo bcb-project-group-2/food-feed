@@ -122,7 +122,8 @@ body {
 
 @media only screen and (max-width: 1129px) {
   .post-container {
-    margin: auto;
+    //width: 100% !important;
+    margin: auto !important;
   }
 }
 #activity-wrapper {

@@ -99,6 +99,7 @@ class UploadModal extends Component {
       this.props.dispatch({
         type: 'TOGGLE_MODAL', payload: 'upload'
       });
+      this.props.dispatch({type:'SWIPE', payload: this.props.view.index})
     })
   }
 

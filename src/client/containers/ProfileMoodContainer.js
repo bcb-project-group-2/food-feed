@@ -8,7 +8,7 @@ class ProfileMoodContainer extends Component {
 
   selectMoods() {
     return this.props.moods
-      .map(mood => <CollectionContainer category={mood}/>)
+      .map(mood => <CollectionContainer category={mood} p={true}/>)
   }
 
   shouldComponentUpdate(nextProps) {
