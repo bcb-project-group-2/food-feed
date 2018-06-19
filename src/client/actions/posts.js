@@ -5,6 +5,7 @@ export function getMoods() {
     dispatch({type: 'FETCH_MOODS'});
     axios.get('/api/discover/moods')
       .then(res => {
+        console.log('MOODS', res.data);
         dispatch({
           type: 'FETCH_MOODS_SUCCESS',
           payload: res.data.map(mood => mood.category)

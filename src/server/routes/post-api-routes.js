@@ -11,7 +11,6 @@ module.exports = function (app) {
   //get all distinct moods
   app.get('/api/discover/moods', (req, res) => {
     db.Post.findAll({
-      order: ['id', 'DESC'],
       attributes: [
         db.sequelize.fn('DISTINCT', db.sequelize.col('category')),
         'category'
