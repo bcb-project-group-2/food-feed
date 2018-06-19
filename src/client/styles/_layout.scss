@@ -81,6 +81,10 @@ body {
   text-wrap: normal;
 }
 
+.feed-post, .feed-post * {
+  overflow: hidden !important;
+}
+
 #sign-in-title {
   grid-row: 1;
   grid-column: span 2
@@ -122,7 +126,8 @@ body {
 
 @media only screen and (max-width: 1129px) {
   .post-container {
-    margin: auto;
+    //width: 100% !important;
+    margin: auto !important;
   }
 }
 #activity-wrapper {

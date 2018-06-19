@@ -21,6 +21,64 @@ const styles = {
 class ProfilePostsContainer extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      likedPosts: []
+    }
+  }
+
+  displayPosts() {
+    if (!!this.props.posts) {
+      return this.props.posts.map(post => <FeedPost {...post}/>)
+    }
+    else {
+      return (
+        <Typography
+          style={{
+            width: '100%',
+            textAlign: 'center',
+          }}
+          variant='subheading'
+        >
+          {'No Posts To Show :{'}
+        </Typography>
+      )
+    }
+  }
+
+  displayLikedPosts() {
+    if (!!this.state.likedPosts) {
+      console.log('liked', this.state.likedPosts);
+      return this.state.likedPosts.map(post => <FeedPost {...{...post, l: true}} />)
+    }
+    else {
+      return (
+        <Typography
+          style={{
+            width: '100%',
+            textAlign: 'center',
+          }}
+          variant='subheading'
+        >
+          {'No Posts To Show :{'}
+        </Typography>
+      )
+    }
+  }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return (
+  //     this.props.posts !== nextProps.posts ||
+  //     this.props.likedPosts !== nextProps.likedPosts ||
+  //     this.state !== nextState
+  //   );
+  // }
+
+  componentWillReceiveProps(nextProps) {
+    nextProps.likedPosts.then(posts => {
+      this.setState({
+        likedPosts: posts
+      })
+    })
   }
 
   render() {
@@ -35,6 +93,7 @@ class ProfilePostsContainer extends Component {
             </Typography>
             <hr className={classes.horizontals}/>
           </div>
+          {this.displayPosts()}
         </div>
         <div className='profile-post-section'>
           <div className={classes.smallHeader}>
@@ -44,6 +103,7 @@ class ProfilePostsContainer extends Component {
             </Typography>
             <hr className={classes.horizontals}/>
           </div>
+          {this.displayLikedPosts()}
         </div>
       </div>
     )

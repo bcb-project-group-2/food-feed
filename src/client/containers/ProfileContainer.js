@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
+import axios from 'axios'
 import {getUserCreatedPosts} from "../actions/posts";
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
@@ -25,9 +26,12 @@ const styles = {
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    backgroundColor: '#f6f6f6'
+    backgroundColor: '#f6f6f6',
+    transition: 'opacity 400ms',
+    animation: 'fadein 400ms'
   },
   bodyBar: {
+    animation: 'fadein 400ms',
     display: 'flex',
     flexFlow: 'row nowrap',
     justifyContent: 'center',
@@ -41,6 +45,7 @@ class ProfileContainer extends Component {
     this.state = {
       index: 0,
       userPosts: [],
+      likedPosts: [],
     };
 
     this.handleSwipe = this.handleSwipe.bind(this)
@@ -53,16 +58,44 @@ class ProfileContainer extends Component {
     })
   }
 
+  deriveMoods() {
+    let moods = [];
+    this.state.userPosts
+      .forEach(post => {
+        if (!moods.includes(post.category)) {
+          moods.push(post.category)
+        }
+      });
+    return moods;
+  }
+
+  getLikedPosts() {
+    return new Promise(resolve => {
+      axios.get('/api/likes/liked/' + this.props.owner.id)
+        .then(res => {
+          resolve(res.data.map(item => item.Post))
+        })
+        .catch(e => {
+          console.log(e);
+          resolve(null)
+        })
+    })
+  }
+
   componentDidMount() {
     this.props.dispatch(getUserCreatedPosts(this.props.owner.id))
   }
 
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
-    if (nextProps.owner.posts !== this.state.userPosts) {
+    if (
+      nextProps.owner.posts !== this.state.userPosts ||
+      this.props.owner.likes !== nextProps.user.likes
+    ) {
       this.setState({
         ...this.state,
-        userPosts: nextProps.owner.posts
+        userPosts: nextProps.owner.posts,
+        likedPosts: this.getLikedPosts(),
       })
     }
   }
@@ -120,8 +153,13 @@ class ProfileContainer extends Component {
               onChangeIndex={index => this.handleSwipe(null, index)}
               style={{overflow: 'hidden'}}
             >
-              <ProfilePostsContainer/>
-              <ProfileMoodContainer/>
+              <ProfilePostsContainer
+                posts={this.state.userPosts}
+                likedPosts={this.state.likedPosts}
+              />
+              <ProfileMoodContainer
+                moods={this.deriveMoods()}
+              />
             </SwipeableViews>
           </div>
         </div>

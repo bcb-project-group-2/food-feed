@@ -57,6 +57,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'flex-start',
     padding: '1rem 0',
+    transition: 'opacity 500ms'
   },
 };
 
@@ -88,12 +89,13 @@ class CollectionContainer extends Component {
         <div
           className='post-container'
           style={{
-          width: '45%',
-          maxWidth: '50%',
-          padding: '0 2.5%',
-          minWidth: 'fit-content',
-          // margin: 'auto'
-        }}>
+            animation: 'fadein 400ms',
+            width: '45%',
+            maxWidth: this.props.p ? '100%' : '50%',
+            padding: '0 2.5%',
+            minWidth: 'fit-content',
+            margin: this.props.p ? 'auto' : 'initial'
+          }}>
           <FeedPost
             {...post}
           />
@@ -183,7 +185,10 @@ class CollectionContainer extends Component {
         <div style={{height: 'auto'}}>
           <div
             className={classNames(this.state.expanded ? classes.expanded : classes.expandable, 'expandable-collection')}>
-            <div className={classes.postContainer}>
+            <div
+              className={classes.postContainer}
+              style={this.state.expanded ? {opacity: '1'} : {opacity: '.01'}}
+            >
               {this.createPosts()}
             </div>
           </div>

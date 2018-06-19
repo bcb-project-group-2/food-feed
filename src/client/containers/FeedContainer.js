@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import CollectionContainer from './CollectionContainer';
 import Loading from '../presentational/Loading'
 import { connect } from 'react-redux';
-import { getMoods } from '../actions/posts'
+import {getLikesByPost, getLikesByUser, getMoods} from '../actions/posts'
 
 @connect(store => store)
 class FeedContainer extends Component {
@@ -14,7 +14,9 @@ class FeedContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(getMoods())
+    this.props.dispatch(getMoods());
+    this.props.dispatch(getLikesByPost());
+    this.props.dispatch(getLikesByUser(this.props.user.currentUser.id))
   }
 
   createCollections() {

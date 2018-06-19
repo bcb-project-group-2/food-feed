@@ -20,6 +20,16 @@ class SignInPageContainer extends Component {
     this.state = {
       mode: 'signin',
       authenticated: false,
+      error: {
+        signin: {
+          message: null,
+          open: false,
+        },
+        signup: {
+          message: null,
+          open: false,
+        },
+      }
     };
     this.inputs = {
       signin: {
@@ -52,7 +62,8 @@ class SignInPageContainer extends Component {
     this.pageNode.current.classList.add('fade-out');
     setTimeout(() => {
       this.setState({
-        authenticated: true
+        authenticated: true,
+
       })
     }, 300)
   }
@@ -68,6 +79,19 @@ class SignInPageContainer extends Component {
       )
     }
     else {
+      if (this.inputs.signup.pass !== this.inputs.signup.passConf ) {
+        this.setState({
+          ...this.state,
+          error: {
+            ...this.state.error,
+            signup: {
+              message: 'Passwords Don\'t Match',
+              open: true,
+            }
+          }
+        });
+        return;
+      }
       this.props.dispatch(
         createUser(
           this.inputs.signup.email,
@@ -86,6 +110,7 @@ class SignInPageContainer extends Component {
         handleInputs={this.handleInputs}
         handleForm={this.formSubmit}
         switch={this.signSwitch}
+        error={this.state.error.signin}
       />
       :
       <SignUpForm
@@ -93,6 +118,7 @@ class SignInPageContainer extends Component {
         handleInputs={this.handleInputs}
         handleForm={this.formSubmit}
         switch={this.signSwitch}
+        error={this.state.error.signup}
       />
 
   }
@@ -112,8 +138,26 @@ class SignInPageContainer extends Component {
       if (!!nextProps.user.currentUser.id) {
         this.authenticateTransition()
       }
+      else if (
+        nextProps.user.status.fetched &&
+        !nextProps.user.currentUser.id &&
+        !this.state.authenticated
+      ){
+        this.setState(({
+          ...this.state,
+          error: {
+            ...this.state.error,
+            signin: {
+              message: 'Email & Password combination Not Found',
+              open: true,
+
+            }
+          }
+        }))
+      }
     }
-    catch(e) {}
+    catch(e) {
+    }
   }
 
   render() {

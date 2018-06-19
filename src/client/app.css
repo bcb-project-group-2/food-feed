@@ -70,7 +70,7 @@ html a {
     font-size: 130%; } }
 /* width */
 ::-webkit-scrollbar {
-  width: 7px;
+  width: 3px;
   padding-top: 60px;
   z-index: 9999; }
 
@@ -169,6 +169,9 @@ body {
 .feed-post > div {
   text-wrap: normal; }
 
+.feed-post, .feed-post * {
+  overflow: hidden !important; }
+
 #sign-in-title {
   grid-row: 1;
   grid-column: span 2; }
@@ -188,7 +191,7 @@ body {
 
 @media only screen and (max-width: 1129px) {
   .post-container {
-    margin: auto; } }
+    margin: auto !important; } }
 #activity-wrapper {
   display: grid;
   grid-template-columns: 33.33%  33.33%  33.33%; }

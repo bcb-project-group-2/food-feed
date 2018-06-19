@@ -74,16 +74,25 @@ module.exports = function (app) {
   })
 
   //get the posts information and comments associated with a specific post
-  app.get("/api/post/:id", function (req, res) {
+  app.get("/api/post/full/:id", function (req, res) {
     db.Post.findOne({
       where: {
         id: req.params.id
       },
-      include: [db.Comment]
+      include: [
+        {
+          model: db.Comment,
+          include: [{
+            model: db.User,
+            attributed: ['user_name', 'UserId']
+          }]
+        },
+        db.User
+      ]
     }).then(function (dbPost) {
       res.json(dbPost)
     })
-  })
+  });
 
   //update the like count of a specific post
   app.post("/api/post/like/:id/:val", function (req, res) {
@@ -111,7 +120,7 @@ module.exports = function (app) {
     })
   })
 
-  app.get("/api/posts/authored/:id", function (req,res){
+  app.get("/api/posts/authored/:id", function (req, res) {
     db.Post.findAndCountAll({
       where: {
         UserId: req.params.id

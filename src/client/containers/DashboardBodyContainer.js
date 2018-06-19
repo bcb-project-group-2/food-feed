@@ -53,6 +53,9 @@ class DashboardBodyContainer extends Component {
       else {
         axios.get(`/api/users/${localStorage.id}`).then(res => {
           console.log('response', res.data);
+          if (!res.data) {
+            window.location = '/'
+          }
           this.props.dispatch({
             type: 'AUTHENTICATE_USER_SUCCESS',
             payload: res.data,
@@ -72,7 +75,8 @@ class DashboardBodyContainer extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return nextProps.view.index !== this.state.index ||
-      this.props.user.currentUser !== nextProps.user.currentUser;
+      this.props.user.currentUser !== nextProps.user.currentUser ||
+      this.props.user.currentUser.posts !== nextProps.user.currentUser.posts
   }
 
   handleChangeIndex = index => {

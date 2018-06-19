@@ -6,34 +6,22 @@ class ProfileMoodContainer extends Component {
     super(props);
   }
 
+  selectMoods() {
+    return this.props.moods
+      .map(mood => <CollectionContainer category={mood} p={true}/>)
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return this.props.moods !== nextProps.moods;
+  }
+
   render() {
     return(
       <div
         style={{padding: '0 .5rem'}}
         className='profile-post-section'
       >
-        <CollectionContainer
-          category='sushi'
-        />
-        <CollectionContainer
-          category='sushi'
-        />
-        <CollectionContainer
-          category='sushi'
-        />
-        <CollectionContainer
-          category='sushi'
-        />
-        <CollectionContainer
-          category='sushi'
-        />
-        <CollectionContainer
-          category='sushi'
-        />
-        <CollectionContainer
-          category='sushi'
-        />
-
+        {this.selectMoods()}
       </div>
     )
   }
