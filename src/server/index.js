@@ -1,8 +1,18 @@
 var express = require('express');
 var passport = require('passport');
+var mysql = require('mysql')
 var Strategy = require('passport-facebook').Strategy;
 const parser = require('body-parser');
 const path = require('path');
+var fs = require('fs')
+
+var conn = mysql.createConnection({
+  host: "127.0.0.1",
+  port: 3306,
+  user: "root",
+  password: "",
+  database: "foodFeedDB"
+});
 // var keys = require('dotenv').config()
 
 var PORT = process.env.PORT || 8080;
@@ -106,10 +116,36 @@ require("./routes/post-api-routes.js")(app);
 require("./routes/comment-api-routes.js")(app);
 require("./routes/relationship-api-routes.js")(app);
 require("./routes/user-api-routes.js")(app);
-require("./routes/image-upload-routes.js")(app);
+require("./routes/like-api-routes.js")(app);
+
 
 db.sequelize.sync({ force: true }).then(function() {
-  app.listen(PORT, function() {
-    console.log("App listening on PORT " + PORT);
-  });
+  // app.listen(PORT, function() {
+  //   console.log("App listening on PORT " + PORT);
+  // })
+
+	conn.connect(function(err) {
+	  if (err) throw err;
+	  console.log("connected as id " + conn.threadId);
+	});
+
+	var filename = __dirname + '/user.sql'
+	seedSQLFiles(filename)
+	filename = __dirname + '/posts.sql'
+	seedSQLFiles(filename)
+
 });
+
+function seedSQLFiles(filename){
+	fs.readFile(filename, 'utf8', function (err, data) {
+		if (err) throw err;	
+		data = data.replace(/\n/g, "");
+		var arr = data.split("?")
+		console.log(arr)
+		arr.forEach(function(element){
+			conn.query(element, function(err, results){
+				if(err) throw err
+			})
+		})		
+	});
+}

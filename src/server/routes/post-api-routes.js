@@ -11,6 +11,7 @@ module.exports = function (app) {
   //get all distinct moods
   app.get('/api/discover/moods', (req, res) => {
     db.Post.findAll({
+      order: ['id', 'DESC'],
       attributes: [
         db.sequelize.fn('DISTINCT', db.sequelize.col('category')),
         'category'
@@ -22,6 +23,7 @@ module.exports = function (app) {
   //get distinct moods where user participates
   app.get('/api/discover/moods/:id', (req, res) => {
     db.Post.findAll({
+      order: ['id', 'DESC'],
       where: {UserId: req.params.id},
       attributes: [
         db.sequelize.fn('DISTINCT', db.sequelize.col('category')),
@@ -95,6 +97,30 @@ module.exports = function (app) {
       res.json(dbPost)
     })
   })
+
+  //route to insert a new like to like table and update like count
+  app.post("/api/post/like/:userid/:id/", function (req, res) {
+    db.Post.update({
+      likecount: likecount + req.params.val,
+      where: {
+        id: req.params.id
+      }
+    }).then(function (dbPost) {
+      db.Like.create(req.body).then(function (dbLike) {
+        res.json(dbLike)
+      })
+    })
+  })
+
+  app.get("/api/posts/authored/:id", function (req,res){
+    db.Post.findAndCountAll({
+      where: {
+        UserId: req.params.id
+      }
+    }).then(result => {
+      res.json(result.count)
+    })
+  });
 
   //delete a post
   app.delete("/api/post/:id", function (req, res) {
