@@ -76,7 +76,7 @@ class NavContainer extends Component {
           </Typography>
           <Tabs className={classes.tabs} value={index} onChange={this.handleChange}>
             <Tab className={classes.tab} label='feed'/>
-            <Tab className={classes.tab} label='activity'/>
+            <Tab className={classes.tab} label='activity' style={{display: 'none'}}/>
           </Tabs>
           <div style={{
             width: 'fit-content',

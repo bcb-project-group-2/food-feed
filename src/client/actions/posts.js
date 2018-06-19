@@ -79,3 +79,34 @@ export function likePost(UserId, PostId, add) {
     }
   }
 }
+
+export function getForeignUser(id) {
+  return async function (dispatch) {
+    let user, likes, posts;
+    axios.get(`/api/users/${id}`).then(res => {
+      user = res.data;
+      axios.get(`/api/likes/user/${id}`).then(res => {
+        likes = res.data;
+        axios.get(`/api/users/posts/${id}`).then(res => {
+          posts = res.data;
+          dispatch({
+            type: 'NOT_ME',
+            payload: {...user, likes, posts}
+          });
+          dispatch({type: 'SWIPE', payload: 1});
+          dispatch({
+            type: 'TOGGLE_MODEL',
+            payload: {
+              post: {
+                name: 'post',
+                open: false,
+                id: null
+              }
+            }
+          });
+
+        })
+      })
+    });
+  }
+}
