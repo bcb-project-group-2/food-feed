@@ -11,6 +11,7 @@ import ListText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import axios from 'axios'
 import {withStyles} from '@material-ui/core/styles';
+import {getForeignUser} from "../actions/posts";
 
 const styles = {
   container: {
@@ -43,7 +44,8 @@ class PostModal extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.closeModal = this.closeModal.bind(this)
+    this.closeModal = this.closeModal.bind(this);
+    this.dispatch = this.props.dispatch.bind(this)
   }
 
   componentDidMount() {
@@ -60,6 +62,7 @@ class PostModal extends Component {
       payload: {
         post: {
           open: false,
+          id: null
         }
       }
     });
@@ -101,9 +104,11 @@ class PostModal extends Component {
         }}>
           <ListText>
             <Typography
+              onClick={() => this.dispatch(getForeignUser(comment.UserId))}
               style={{
                 width: 'fit-content',
-                borderBottom: 'solid 1px gray'
+                borderBottom: 'solid 1px gray',
+                cursor: 'pointer'
               }}
               variant='caption'
             >
@@ -117,7 +122,7 @@ class PostModal extends Component {
           </ListText>
         </ListItem>
       )
-    }).reverse()
+    })
   }
 
   getPost() {

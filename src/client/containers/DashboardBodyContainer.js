@@ -73,6 +73,15 @@ class DashboardBodyContainer extends Component {
     }
   }
 
+  foreignProfile() {
+    if (this.props.user.notMe) {
+      return <ProfileContainer owner={this.props.user.notMe}/>
+    }
+    else {
+      return <div></div>
+    }
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     return nextProps.view.index !== this.state.index ||
       this.props.user.currentUser !== nextProps.user.currentUser ||
@@ -94,7 +103,7 @@ class DashboardBodyContainer extends Component {
             onChangeIndex={this.handleChangeIndex}
           >
             <FeedContainer/>
-            <ActivityContainer/>
+            {this.foreignProfile()}
             <ProfileContainer owner={this.props.user.currentUser}/>
           </SwipeableViews>
           <PostModal/>

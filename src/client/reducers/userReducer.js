@@ -8,7 +8,8 @@ export default function reducer(
     currentUser: {
       posts: [],
       likes: [],
-    }
+    },
+    notMe: null
   },
   action = {type: null}) {
   switch (action.type) {
@@ -66,56 +67,11 @@ export default function reducer(
         }
       }
     }
-    case "FETCH_FILE": {
+    case "NOT_ME": {
       return {
-        openFiles: {
-          ...state.openFiles
-        },
-        loadedFiles: {
-          ...state.loadedFiles
-        },
-        status: {
-          ...state.status,
-          fetching: true
-        }
-      };
-    }
-    case "FETCH_FILE_REJECTED": {
-      return {
-        openFiles: {
-          ...state.openFiles
-        },
-        loadedFiles: {
-          ...state.loadedFiles
-        },
-        status: {
-          ...state.status,
-          fetching: false,
-          error: action.payload
-        }
+        ...state,
+        notMe: action.payload
       }
-    }
-    case "FETCH_FILE_FULFILLED": {
-      return {
-        openFiles: {
-          ...state.openFiles,
-          [action.payload.id]: {
-            title: action.payload.title,
-            id: action.payload.id,
-          },
-        },
-        loadedFiles: {
-          ...state.loadedFiles,
-          [action.payload.id]: action.payload,
-        },
-        status: {
-          ...state.status,
-          fetching: false,
-          fetched: true,
-        },
-        // files: action.payload.files,
-        // name: action.payload.name,
-      };
     }
   }
   return {...state};

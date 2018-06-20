@@ -162,41 +162,12 @@ class SignInForm extends Component {
           >
             Sign up
           </Button>
-          <label htmlFor='login' style={{
-            width: '100%',
-            padding: 0,
-            margin: 0,
-          }}>
-            <Button
-              variant='contained'
-              color='secondary'
-              className={classes.textField}
-              component={this.props.login}
-              style={{
-                margin: 0,
-                color: '#FFFFFF'
-              }}
-              onSuccess={auth => console.log(JSON.stringify(auth, null, 2))}
-              clientId="624256432400-7jde5h7a5lbn9tnmdtm07qt05d7c39nu.apps.googleusercontent.com"
-            >
-              Google Login
-            </Button>
-          </label>
           <Button
             variant='contained'
             onClick={this.props.switch}
             className={classes.textField}>
             sign in
           </Button>
-          <this.props.login
-            id="login"
-            style={{display: 'none'}}
-            classname={classes.textField}
-            clientId="624256432400-7jde5h7a5lbn9tnmdtm07qt05d7c39nu.apps.googleusercontent.com"
-            onSuccess={auth => console.log('success', auth)}
-            onFailure={() => console.log('fail')}
-
-          />
         </form>
       </Card>
     )

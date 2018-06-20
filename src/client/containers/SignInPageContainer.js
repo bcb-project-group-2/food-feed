@@ -4,7 +4,6 @@ import SignUpForm from '../presentational/SignUpForm';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import {GoogleLogin} from 'react-google-login';
 import {Redirect} from 'react-router-dom'
 import chopsticks from '../images/chopSticks.png'
 import {authenticateUser, createUser} from "../actions/signIn";
@@ -106,7 +105,6 @@ class SignInPageContainer extends Component {
   loadForm() {
     return this.state.mode === 'signin' ?
       <SignInForm
-        login={GoogleLogin}
         handleInputs={this.handleInputs}
         handleForm={this.formSubmit}
         switch={this.signSwitch}
@@ -114,7 +112,6 @@ class SignInPageContainer extends Component {
       />
       :
       <SignUpForm
-        login={GoogleLogin}
         handleInputs={this.handleInputs}
         handleForm={this.formSubmit}
         switch={this.signSwitch}

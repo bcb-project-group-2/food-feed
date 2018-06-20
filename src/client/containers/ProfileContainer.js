@@ -121,11 +121,18 @@ class ProfileContainer extends Component {
                 {this.props.owner.user_name}
               </Typography>
               <Typography component='h2' variant='subheading'>
-                {this.state.userPosts ? this.state.userPosts.length : 0} Posts | 3 Followers | 7 Following
+                | {this.state.userPosts ? this.state.userPosts.length : 0} Posts |
               </Typography>
             </div>
-            <Button variant='contained' color='primary'>
-              follow
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={() => {
+                localStorage.clear();
+                window.location = '/'
+              }}
+            >
+              Sign Out
             </Button>
           </div>
           <div
